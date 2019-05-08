@@ -69,7 +69,7 @@
 
 
   <meta name="keywords" content="-Python
--矩阵,">
+-数据分析,">
 
 
 
@@ -80,21 +80,27 @@
 
 
 
-<meta name="description" content="python矩阵中matrix()和array()函数区别 本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：  使用numpy库生成指定矩阵的方法差异 矩阵性质的差异 在矩阵乘法的不同体现 matrix()和array()关于秩的区别 array()函数和mat()函数之间的转换 一些基本知识  1、具体矩阵生成方式的不同：我们指定生成以下矩阵： 选取此矩">
+<meta name="description" content="首先，要知道以下五点：  stack : 将数据的列“旋转”为行 unstack : 将数据的行“旋转”为列 stack和unstack默认操作为最内层 stack和unstack默认旋转轴的级别将会成果结果中的最低级别（最内层） stack和unstack为一组逆运算操作  例1：创建DataFrame，行索引名为state，列索引名为number12345import pandas as pd">
 <meta name="keywords" content="-Python
--矩阵">
+-数据分析">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python矩阵中matrix()和array()函数区别">
-<meta property="og:url" content="http://yoursite.com/2019/04/08/python-array/index.html">
+<meta property="og:title" content="【Python】pandas的group分组与agg聚合">
+<meta property="og:url" content="http://yoursite.com/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/index.html">
 <meta property="og:site_name" content="YY是个呆逼">
-<meta property="og:description" content="python矩阵中matrix()和array()函数区别 本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：  使用numpy库生成指定矩阵的方法差异 矩阵性质的差异 在矩阵乘法的不同体现 matrix()和array()关于秩的区别 array()函数和mat()函数之间的转换 一些基本知识  1、具体矩阵生成方式的不同：我们指定生成以下矩阵： 选取此矩">
+<meta property="og:description" content="首先，要知道以下五点：  stack : 将数据的列“旋转”为行 unstack : 将数据的行“旋转”为列 stack和unstack默认操作为最内层 stack和unstack默认旋转轴的级别将会成果结果中的最低级别（最内层） stack和unstack为一组逆运算操作  例1：创建DataFrame，行索引名为state，列索引名为number12345import pandas as pd">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
-<meta property="og:updated_time" content="2019-04-09T09:03:31.208Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack2.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack3.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/08/images/stack4.png">
+<meta property="og:updated_time" content="2019-05-08T07:57:26.888Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python矩阵中matrix()和array()函数区别">
-<meta name="twitter:description" content="python矩阵中matrix()和array()函数区别 本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：  使用numpy库生成指定矩阵的方法差异 矩阵性质的差异 在矩阵乘法的不同体现 matrix()和array()关于秩的区别 array()函数和mat()函数之间的转换 一些基本知识  1、具体矩阵生成方式的不同：我们指定生成以下矩阵： 选取此矩">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta name="twitter:title" content="【Python】pandas的group分组与agg聚合">
+<meta name="twitter:description" content="首先，要知道以下五点：  stack : 将数据的列“旋转”为行 unstack : 将数据的行“旋转”为列 stack和unstack默认操作为最内层 stack和unstack默认旋转轴的级别将会成果结果中的最低级别（最内层） stack和unstack为一组逆运算操作  例1：创建DataFrame，行索引名为state，列索引名为number12345import pandas as pd">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/08/images/stack1.png">
 
 
 
@@ -124,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/08/python-array/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/">
 
 
 
 
 
-  <title>Python矩阵中matrix()和array()函数区别 | YY是个呆逼</title>
+  <title>【Python】pandas的group分组与agg聚合 | YY是个呆逼</title>
   
 
 
@@ -297,7 +303,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/python-array/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Y_uan">
@@ -314,7 +320,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python矩阵中matrix()和array()函数区别</h1>
+          <h1 class="post-title" itemprop="name headline">【Python】pandas的group分组与agg聚合</h1>
         
 
         <div class="post-meta">
@@ -326,8 +332,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T23:32:39+08:00">
-                2019-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T00:00:00+08:00">
+                2019-05-08
               </time>
             
 
@@ -386,21 +392,29 @@
       
 
       
-        <h2 id="python矩阵中matrix-和array-函数区别"><a href="#python矩阵中matrix-和array-函数区别" class="headerlink" title="python矩阵中matrix()和array()函数区别"></a>python矩阵中matrix()和array()函数区别</h2><hr>
-<p>本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：</p>
+        <p>首先，要知道以下五点：</p>
 <ol>
-<li>使用numpy库生成指定矩阵的方法差异</li>
-<li>矩阵性质的差异</li>
-<li>在矩阵乘法的不同体现</li>
-<li>matrix()和array()关于秩的区别</li>
-<li>array()函数和mat()函数之间的转换</li>
-<li>一些基本知识</li>
+<li><code>stack</code> : 将数据的列“旋转”为行</li>
+<li><code>unstack</code> : 将数据的行“旋转”为列</li>
+<li><code>stack</code>和<code>unstack</code>默认操作为最内层</li>
+<li><code>stack</code>和<code>unstack</code>默认旋转轴的级别将会成果结果中的最低级别（最内层）</li>
+<li><code>stack</code>和<code>unstack</code>为一组逆运算操作</li>
 </ol>
-<h3 id="1、具体矩阵生成方式的不同："><a href="#1、具体矩阵生成方式的不同：" class="headerlink" title="1、具体矩阵生成方式的不同："></a>1、具体矩阵生成方式的不同：</h3><p>我们指定生成以下矩阵：</p>
-<p><div align="center"><br><img src="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="简单矩阵" title="简单矩阵"><br></div><br>选取此矩阵的原因是：二阶方便计算；矩阵可逆；逆函数容易得到(可口算出)。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a1 = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">b1 = np.mat([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line">a2 = np.array(([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line">b2 = np.mat(([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line"></span><br><span class="line">a3 = np.array(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)))</span><br><span class="line">b3 = np.mat(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)))</span><br><span class="line"></span><br><span class="line">b4 = np.mat(<span class="string">'1 2; 3 4'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"\n"</span>,a1,<span class="string">"\n"</span>,b1,<span class="string">"\n"</span>,a2,<span class="string">"\n"</span>,b2,<span class="string">"\n"</span>,a3,<span class="string">"\n"</span>,b3,<span class="string">"\n"</span>,b4)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span> <span class="number">2</span>]</span><br><span class="line">[<span class="number">3</span> <span class="number">4</span>]]</span><br></pre></td></tr></table></figure></p>
-<p>上述函数的变化无非就是把大括号内的”[]”换成”()”，但括起来的认为一个整体，不同之处在于b4内用括号、空格和分号来产生矩阵、这个方法只可以在maxtrix()函数中使用，不可以写成 a4 = np.array(‘1 2; 3 4’)</p>
+<p><strong>例1：创建DataFrame，行索引名为state，列索引名为number</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">data = pd.DataFrame(np.arange(<span class="number">6</span>).reshape((<span class="number">2</span>, <span class="number">3</span>)), index = pd.Index([<span class="string">'Ohio'</span>,<span class="string">'Colorado'</span>], name = <span class="string">'state'</span>),</span><br><span class="line">                columns = pd.Index([<span class="string">'one'</span>,<span class="string">'two'</span>,<span class="string">'three'</span>], name = <span class="string">'number'</span>))</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure></p>
+<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br></p>
+<p><strong>例2：将DataFrame的列旋转为行，即stack操作。</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = data.stack()</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure></p>
+<p><div align="center"><br><img src="../images/stack2.png"><br></div><br><br></p>
+<p>&emsp;stack操作后将列索引number旋转为行索引，并且置于行索引的最内层（外层为索引state），也就是将旋转轴（number）的结果置于最低级别。</p>
+<p><strong>例3：将DataFrame的行旋转为列，即unstack操作。</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.unstack()</span><br></pre></td></tr></table></figure></p>
+<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br><br>&emsp;第三点的意思是，unstack操作默认将内层索引number旋转为列索引。</p>
+<p>&emsp;同时，也可以指定分层级别或者索引名称来指定操作级别，下面做法同样会得到上面的结果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.unstack(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.unstack(<span class="string">'number'</span>)</span><br></pre></td></tr></table></figure></p>
+<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br></p>
+<p><strong>例4：stack和unstack逆运算</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s1 = pd.Series([<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], index=list(<span class="string">'abcd'</span>))</span><br><span class="line">s2 = pd.Series([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], index=list(<span class="string">'cde'</span>))</span><br><span class="line">data2 = pd.concat([s1,s2], keys=[<span class="string">'one'</span>,<span class="string">'two'</span>])</span><br><span class="line">print(data2)</span><br></pre></td></tr></table></figure></p>
+<p><div align="center"><br><img src="../images/stack3.png"><br></div><br><br></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data2.unstack().stack()</span><br></pre></td></tr></table></figure>
+<p><div align="center"><br><img src="../images/stack4.png"><br></div><br><br></p>
 
       
     </div>
@@ -418,8 +432,8 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python-矩阵/" rel="tag"># -Python
--矩阵</a>
+            <a href="/tags/Python-数据分析/" rel="tag"># -Python
+-数据分析</a>
           
         </div>
       
@@ -432,8 +446,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/08/java-reference/" rel="next" title="Java的4种引用类型">
-                <i class="fa fa-chevron-left"></i> Java的4种引用类型
+              <a href="/2019/04/08/futurewarning/" rel="next" title="Python使用逻辑回归提示FutureWarning">
+                <i class="fa fa-chevron-left"></i> Python使用逻辑回归提示FutureWarning
               </a>
             
           </div>
@@ -442,8 +456,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/04/08/futurewarning/" rel="prev" title="Python使用逻辑回归提示FutureWarning">
-                Python使用逻辑回归提示FutureWarning <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/08/【Python】pandas的group分组与agg聚合/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -501,17 +515,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -573,22 +578,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#python矩阵中matrix-和array-函数区别"><span class="nav-number">1.</span> <span class="nav-text">python矩阵中matrix()和array()函数区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、具体矩阵生成方式的不同："><span class="nav-number">1.1.</span> <span class="nav-text">1、具体矩阵生成方式的不同：</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
