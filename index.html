@@ -292,6 +292,219 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/15/20190515-JVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/15/20190515-JVM/" itemprop="url">【Java】面试谈之JVM</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-15T08:35:29+08:00">
+                2019-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">-后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="在JVM中如何判断一个对象的生死状态？"><a href="#在JVM中如何判断一个对象的生死状态？" class="headerlink" title="在JVM中如何判断一个对象的生死状态？"></a>在JVM中如何判断一个对象的生死状态？</h3><p><br><br>判断对象的生死状态的算法有以下几个：</p>
+<h4 id="1、引用计数器算法"><a href="#1、引用计数器算法" class="headerlink" title="1、引用计数器算法"></a>1、引用计数器算法</h4><p>&emsp;引用计算器判断对象是否存货的算法是这样的：给每一个对象设置一个引用计数器，每当有一个地方引用这个对象的时候，计数器就加1，与之相反，每当引用时效的时候就减1。</p>
+<p><strong>优点：</strong>实现简单、性能高。</p>
+<p><strong>缺点：</strong>增减处理频繁消耗cpu计算、计算器占用很多位浪费空间、最重要的缺点是无法解决循环引用的问题。</p>
+<p>&emsp;因为引用计算器算法很难解决循环引用的问题，所以主流的Java虚拟机都没有使用使用引用计数器算法来管理内存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1Mb = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">10</span> * _1Mb]; <span class="comment">//申请内存</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  System.out.println(String.format(<span class="string">"开始: %d M"</span>, Runtime.getRuntime().freeMemory() / (<span class="number">1024</span> * <span class="number">1024</span>)));</span><br><span class="line"></span><br><span class="line">  ReferenceDemo referenceDemo = <span class="keyword">new</span> ReferenceDemo();</span><br><span class="line">  ReferenceDemo referenceDemo2 = <span class="keyword">new</span> ReferenceDemo();</span><br><span class="line">  referenceDemo.instance = referenceDemo2;</span><br><span class="line">  referenceDemo2.instance = referenceDemo;</span><br><span class="line"></span><br><span class="line">  System.out.println(String.out.println(String.format(<span class="string">"运行：%d M"</span>, Runtime.getRuntime().freeMemory() / (<span class="number">1024</span> * <span class="number">1024</span>))));</span><br><span class="line">  referenceDemo = <span class="keyword">null</span>;</span><br><span class="line">  referenceDemo2 = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  System.gc();    <span class="comment">//手动触发垃圾回收</span></span><br><span class="line"></span><br><span class="line">  System.out.println(String.format(<span class="string">"结束：%d M"</span>, Runtime.getRuntime().freeMemory() / (<span class="number">1024</span> * <span class="number">1024</span>)));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">开始：117M</span><br><span class="line">运行中：96M</span><br><span class="line">结束：119M</span><br></pre></td></tr></table></figure></p>
+<p>从结果中可以看出，虚拟机并没有因为相互引用就不回收它们，也从侧面说明了虚拟机并不是使用引用计数器实现的。</p>
+<h4 id="2、可达性分析算法"><a href="#2、可达性分析算法" class="headerlink" title="2、可达性分析算法"></a>2、可达性分析算法</h4><p>&emsp;在主流的语言的主流实现中，比如Java、C#、甚至是古老的Lisp都是使用的可达性分析算法来判断对象是否存活的。</p>
+<p>&emsp;这个算法的核心思路就是通过一些列的“GC Roots”对象作为起始点，从这些对象开始往下搜索，搜索所经过的路径称之为“引用链”。</p>
+<p>&emsp;当一个对象到GC Roots没有任何引用链相连的时候，证明此对象是可以被回收的。如下图所示：</p>
+<p><div align="center"><br><img src="../images/190515JVM/JVM1.jpg"><br></div><br><br><br>在Java中，可作为GC Roots对象的列表：</p>
+<ul>
+<li><p>Java虚拟机栈中的引用对象。</p>
+</li>
+<li><p>本地方法栈中JNI（即一般说的Native方法）引用的对象。</p>
+</li>
+<li><p>方法区中类静态常量的引用对象。</p>
+</li>
+<li><p>方法区中常量的引用对象。</p>
+</li>
+</ul>
+<hr>
+<h3 id="对象生死与引用的关系"><a href="#对象生死与引用的关系" class="headerlink" title="对象生死与引用的关系"></a>对象生死与引用的关系</h3><p><br></p>
+<p>&emsp;从上面的两种算法来看，不管是引用计数法还是可达性分析算法都与对象的“引用”有关，这说明：对象的引用决定了对象的生死。</p>
+<p>&emsp;<font color:blue>那对象的引用都有哪些呢？</font></p>
+<p>&emsp;在JDK1.2之前，引用的定义很传统：<strong>如果reference类型的数据中存储的数值代表的是另一块内存的起始地址，那就称这块内存代表着一块引用。</strong></p>
+<p>&emsp;这样的定义很纯粹，但是也很狭隘，这种情况下一个对象要么被引用，要么没引用，对于介于两者之间的对象显得无能为力。</p>
+<p>JDK1.2之后对引用进行了扩充，将引用分为：</p>
+<ul>
+<li><p><strong>强引用（Strong Reference）</strong></p>
+</li>
+<li><p><strong>软引用（Soft Reference）</strong></p>
+</li>
+<li><p><strong>弱引用（Weak Reference）</strong></p>
+</li>
+<li><p><strong>虚引用（Phantom Reference）</strong></p>
+</li>
+</ul>
+<p>&emsp;对象不是非生即死的，当空间还足够时，还可以保留这些对象。如果空间不足时，再抛弃这些对象。很多缓存功能的实现也符合这样的场景。</p>
+<p>强引用、软引用、弱引用、虚引用，这4种引用的强度是依次递减的。</p>
+<p><strong>强引用：</strong>在代码中普遍存在的，类似“Object obj = new Object()”这类引用，只要强引用还在，垃圾收集器永远不会回收掉被引用的对象。</p>
+<p><strong>软引用：</strong>是一种相对强引用弱化一些的引用，可以让对象豁免一些垃圾收集，只有当jvm认为内存不足时，才回去试图回收软引用指向的对象。JVM会确保在抛出OutOfMemoryError之前，清理软引用指向的对象。</p>
+<p><strong>弱引用：</strong>非必需对象，但它的强度比软引用更弱，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。</p>
+<p><strong>虚引用：</strong>也称为幽灵引用或幻影引用，是最弱的一种引用关系，无法通过虚引用来获取一个对象实例，为对象设置虚引用的目的只有一个，就是当这个对象被收集器回收时收到一条系统通知。（真惨QAQ）</p>
+<hr>
+<h3 id="死亡标记与拯救"><a href="#死亡标记与拯救" class="headerlink" title="死亡标记与拯救"></a>死亡标记与拯救</h3><p><br><br>&emsp;在可达性算法中不可达的对象，并不是“非死不可”的，要真正宣告一个对象死亡，至少要经历两次标记的过程。</p>
+<p>&emsp;如果对象在进行可达性分析之后，没有与GC Roots相连接的引用链，它会被第一次标记，并进行筛选，筛选的条件是此对象是否有必要执行finalize()方法。</p>
+<p><strong>执行finalize()方法的两个条件：</strong></p>
+<ol>
+<li><p>重写finalize()方法</p>
+</li>
+<li><p>finalize()方法之前没被调用过，因为对象的finalize()方法只能被执行一次。</p>
+</li>
+</ol>
+<p>&emsp;如果满足以上两个条件，这个对象将会放置在F-Queque的队列之中，并在稍后由一个虚拟机自建的、低优先级Finalize线程来执行它。</p>
+<p><strong>对象的“自我拯救”：</strong></p>
+<p>&emsp;finalize()方法是对象脱离死亡命运最后的机会，如果对象在finalize()方法中重新与引用链上的任何一个对象建立关联即可，比如把自己（this关键字）赋值给某个类变量或对象的成员变量。</p>
+<p>实现代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeDemo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> FinalizeDemo Hook = <span class="keyword">null</span>;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.finalize();</span><br><span class="line">    System.out.println(<span class="string">"执行finalize方法"</span>);</span><br><span class="line">    FinalizeDemo.Hook = <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    Hook = <span class="keyword">new</span> FinalizeDemo();</span><br><span class="line">    <span class="comment">// 第一次拯救</span></span><br><span class="line">    Hook = <span class="keyword">null</span>;</span><br><span class="line">    System.gc();</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);  <span class="comment">//等待finalize执行</span></span><br><span class="line">    <span class="keyword">if</span> (Hook != <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.out.println(<span class="string">"我还活着"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"我已经死了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 第二次，代码完全一样</span></span><br><span class="line">    Hook = <span class="keyword">null</span>;</span><br><span class="line">    System.gc();</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);  <span class="comment">//等待finalize执行</span></span><br><span class="line">    <span class="keyword">if</span> (Hook != <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.out.println(<span class="string">"我还活着"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"我已经死了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行finalize方法</span><br><span class="line">我还活着</span><br><span class="line">我已经死了</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;从结果可以看出，任何对象的finalize()方法都智慧被系统调用一次。</p>
+<p>&emsp;<strong>不建议使用finalize()方法来拯救对象</strong>，原因如下：</p>
+<ol>
+<li><p>任何对象的finalize()只能执行一次。</p>
+</li>
+<li><p>它的运行代价高昂。</p>
+</li>
+<li><p>不确定性大。</p>
+</li>
+<li><p>无法保证各个对象的调用顺序。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/09/UML类图/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1894,7 +2107,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1916,7 +2129,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

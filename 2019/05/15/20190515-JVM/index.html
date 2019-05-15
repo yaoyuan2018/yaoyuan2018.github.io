@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="-Java -JVM,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在JVM中如何判断一个对象的生死状态？判断对象的生死状态的算法有以下几个： 1、引用计数器算法&amp;emsp;引用计算器判断对象是否存货的算法是这样的：给每一个对象设置一个引用计数器，每当有一个地方引用这个对象的时候，计数器就加1，与之相反，每当引用时效的时候就减1。 优点：实现简单、性能高。 缺点：增减处理频繁消耗cpu计算、计算器占用很多位浪费空间、最重要的缺点是无法解决循环引用的问题。 &amp;ems">
+<meta name="keywords" content="-Java -JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Java】面试谈之JVM">
+<meta property="og:url" content="http://yoursite.com/2019/05/15/20190515-JVM/index.html">
+<meta property="og:site_name" content="YY是个呆逼">
+<meta property="og:description" content="在JVM中如何判断一个对象的生死状态？判断对象的生死状态的算法有以下几个： 1、引用计数器算法&amp;emsp;引用计算器判断对象是否存货的算法是这样的：给每一个对象设置一个引用计数器，每当有一个地方引用这个对象的时候，计数器就加1，与之相反，每当引用时效的时候就减1。 优点：实现简单、性能高。 缺点：增减处理频繁消耗cpu计算、计算器占用很多位浪费空间、最重要的缺点是无法解决循环引用的问题。 &amp;ems">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/05/15/images/190515JVM/JVM1.jpg">
+<meta property="og:updated_time" content="2019-05-15T03:08:23.156Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Java】面试谈之JVM">
+<meta name="twitter:description" content="在JVM中如何判断一个对象的生死状态？判断对象的生死状态的算法有以下几个： 1、引用计数器算法&amp;emsp;引用计算器判断对象是否存货的算法是这样的：给每一个对象设置一个引用计数器，每当有一个地方引用这个对象的时候，计数器就加1，与之相反，每当引用时效的时候就减1。 优点：实现简单、性能高。 缺点：增减处理频繁消耗cpu计算、计算器占用很多位浪费空间、最重要的缺点是无法解决循环引用的问题。 &amp;ems">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/15/images/190515JVM/JVM1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/15/20190515-JVM/">
+
+
+
+
+
+  <title>【Java】面试谈之JVM | YY是个呆逼</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?41fc030db57d5570dd22f78997dc4a7e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/yaoyuan2018" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YY是个呆逼</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/15/20190515-JVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Java】面试谈之JVM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-15T08:35:29+08:00">
+                2019-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后端/" itemprop="url" rel="index">
+                    <span itemprop="name">-后端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="在JVM中如何判断一个对象的生死状态？"><a href="#在JVM中如何判断一个对象的生死状态？" class="headerlink" title="在JVM中如何判断一个对象的生死状态？"></a>在JVM中如何判断一个对象的生死状态？</h3><p><br><br>判断对象的生死状态的算法有以下几个：</p>
+<h4 id="1、引用计数器算法"><a href="#1、引用计数器算法" class="headerlink" title="1、引用计数器算法"></a>1、引用计数器算法</h4><p>&emsp;引用计算器判断对象是否存货的算法是这样的：给每一个对象设置一个引用计数器，每当有一个地方引用这个对象的时候，计数器就加1，与之相反，每当引用时效的时候就减1。</p>
+<p><strong>优点：</strong>实现简单、性能高。</p>
+<p><strong>缺点：</strong>增减处理频繁消耗cpu计算、计算器占用很多位浪费空间、最重要的缺点是无法解决循环引用的问题。</p>
+<p>&emsp;因为引用计算器算法很难解决循环引用的问题，所以主流的Java虚拟机都没有使用使用引用计数器算法来管理内存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReferenceDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Object instance = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> _1Mb = <span class="number">1024</span> * <span class="number">1024</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>  <span class="keyword">byte</span>[] bigSize = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">10</span> * _1Mb]; <span class="comment">//申请内存</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  System.out.println(String.format(<span class="string">"开始: %d M"</span>, Runtime.getRuntime().freeMemory() / (<span class="number">1024</span> * <span class="number">1024</span>)));</span><br><span class="line"></span><br><span class="line">  ReferenceDemo referenceDemo = <span class="keyword">new</span> ReferenceDemo();</span><br><span class="line">  ReferenceDemo referenceDemo2 = <span class="keyword">new</span> ReferenceDemo();</span><br><span class="line">  referenceDemo.instance = referenceDemo2;</span><br><span class="line">  referenceDemo2.instance = referenceDemo;</span><br><span class="line"></span><br><span class="line">  System.out.println(String.out.println(String.format(<span class="string">"运行：%d M"</span>, Runtime.getRuntime().freeMemory() / (<span class="number">1024</span> * <span class="number">1024</span>))));</span><br><span class="line">  referenceDemo = <span class="keyword">null</span>;</span><br><span class="line">  referenceDemo2 = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">  System.gc();    <span class="comment">//手动触发垃圾回收</span></span><br><span class="line"></span><br><span class="line">  System.out.println(String.format(<span class="string">"结束：%d M"</span>, Runtime.getRuntime().freeMemory() / (<span class="number">1024</span> * <span class="number">1024</span>)));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">开始：117M</span><br><span class="line">运行中：96M</span><br><span class="line">结束：119M</span><br></pre></td></tr></table></figure></p>
+<p>从结果中可以看出，虚拟机并没有因为相互引用就不回收它们，也从侧面说明了虚拟机并不是使用引用计数器实现的。</p>
+<h4 id="2、可达性分析算法"><a href="#2、可达性分析算法" class="headerlink" title="2、可达性分析算法"></a>2、可达性分析算法</h4><p>&emsp;在主流的语言的主流实现中，比如Java、C#、甚至是古老的Lisp都是使用的可达性分析算法来判断对象是否存活的。</p>
+<p>&emsp;这个算法的核心思路就是通过一些列的“GC Roots”对象作为起始点，从这些对象开始往下搜索，搜索所经过的路径称之为“引用链”。</p>
+<p>&emsp;当一个对象到GC Roots没有任何引用链相连的时候，证明此对象是可以被回收的。如下图所示：</p>
+<p><div align="center"><br><img src="../images/190515JVM/JVM1.jpg"><br></div><br><br><br>在Java中，可作为GC Roots对象的列表：</p>
+<ul>
+<li><p>Java虚拟机栈中的引用对象。</p>
+</li>
+<li><p>本地方法栈中JNI（即一般说的Native方法）引用的对象。</p>
+</li>
+<li><p>方法区中类静态常量的引用对象。</p>
+</li>
+<li><p>方法区中常量的引用对象。</p>
+</li>
+</ul>
+<hr>
+<h3 id="对象生死与引用的关系"><a href="#对象生死与引用的关系" class="headerlink" title="对象生死与引用的关系"></a>对象生死与引用的关系</h3><p><br></p>
+<p>&emsp;从上面的两种算法来看，不管是引用计数法还是可达性分析算法都与对象的“引用”有关，这说明：对象的引用决定了对象的生死。</p>
+<p>&emsp;<font color:blue>那对象的引用都有哪些呢？</font></p>
+<p>&emsp;在JDK1.2之前，引用的定义很传统：<strong>如果reference类型的数据中存储的数值代表的是另一块内存的起始地址，那就称这块内存代表着一块引用。</strong></p>
+<p>&emsp;这样的定义很纯粹，但是也很狭隘，这种情况下一个对象要么被引用，要么没引用，对于介于两者之间的对象显得无能为力。</p>
+<p>JDK1.2之后对引用进行了扩充，将引用分为：</p>
+<ul>
+<li><p><strong>强引用（Strong Reference）</strong></p>
+</li>
+<li><p><strong>软引用（Soft Reference）</strong></p>
+</li>
+<li><p><strong>弱引用（Weak Reference）</strong></p>
+</li>
+<li><p><strong>虚引用（Phantom Reference）</strong></p>
+</li>
+</ul>
+<p>&emsp;对象不是非生即死的，当空间还足够时，还可以保留这些对象。如果空间不足时，再抛弃这些对象。很多缓存功能的实现也符合这样的场景。</p>
+<p>强引用、软引用、弱引用、虚引用，这4种引用的强度是依次递减的。</p>
+<p><strong>强引用：</strong>在代码中普遍存在的，类似“Object obj = new Object()”这类引用，只要强引用还在，垃圾收集器永远不会回收掉被引用的对象。</p>
+<p><strong>软引用：</strong>是一种相对强引用弱化一些的引用，可以让对象豁免一些垃圾收集，只有当jvm认为内存不足时，才回去试图回收软引用指向的对象。JVM会确保在抛出OutOfMemoryError之前，清理软引用指向的对象。</p>
+<p><strong>弱引用：</strong>非必需对象，但它的强度比软引用更弱，被弱引用关联的对象只能生存到下一次垃圾收集发生之前。</p>
+<p><strong>虚引用：</strong>也称为幽灵引用或幻影引用，是最弱的一种引用关系，无法通过虚引用来获取一个对象实例，为对象设置虚引用的目的只有一个，就是当这个对象被收集器回收时收到一条系统通知。（真惨QAQ）</p>
+<hr>
+<h3 id="死亡标记与拯救"><a href="#死亡标记与拯救" class="headerlink" title="死亡标记与拯救"></a>死亡标记与拯救</h3><p><br><br>&emsp;在可达性算法中不可达的对象，并不是“非死不可”的，要真正宣告一个对象死亡，至少要经历两次标记的过程。</p>
+<p>&emsp;如果对象在进行可达性分析之后，没有与GC Roots相连接的引用链，它会被第一次标记，并进行筛选，筛选的条件是此对象是否有必要执行finalize()方法。</p>
+<p><strong>执行finalize()方法的两个条件：</strong></p>
+<ol>
+<li><p>重写finalize()方法</p>
+</li>
+<li><p>finalize()方法之前没被调用过，因为对象的finalize()方法只能被执行一次。</p>
+</li>
+</ol>
+<p>&emsp;如果满足以上两个条件，这个对象将会放置在F-Queque的队列之中，并在稍后由一个虚拟机自建的、低优先级Finalize线程来执行它。</p>
+<p><strong>对象的“自我拯救”：</strong></p>
+<p>&emsp;finalize()方法是对象脱离死亡命运最后的机会，如果对象在finalize()方法中重新与引用链上的任何一个对象建立关联即可，比如把自己（this关键字）赋值给某个类变量或对象的成员变量。</p>
+<p>实现代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FinalizeDemo</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> FinalizeDemo Hook = <span class="keyword">null</span>;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.finalize();</span><br><span class="line">    System.out.println(<span class="string">"执行finalize方法"</span>);</span><br><span class="line">    FinalizeDemo.Hook = <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    Hook = <span class="keyword">new</span> FinalizeDemo();</span><br><span class="line">    <span class="comment">// 第一次拯救</span></span><br><span class="line">    Hook = <span class="keyword">null</span>;</span><br><span class="line">    System.gc();</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);  <span class="comment">//等待finalize执行</span></span><br><span class="line">    <span class="keyword">if</span> (Hook != <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.out.println(<span class="string">"我还活着"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"我已经死了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 第二次，代码完全一样</span></span><br><span class="line">    Hook = <span class="keyword">null</span>;</span><br><span class="line">    System.gc();</span><br><span class="line">    Thread.sleep(<span class="number">500</span>);  <span class="comment">//等待finalize执行</span></span><br><span class="line">    <span class="keyword">if</span> (Hook != <span class="keyword">null</span>) &#123;</span><br><span class="line">        System.out.println(<span class="string">"我还活着"</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">"我已经死了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">执行finalize方法</span><br><span class="line">我还活着</span><br><span class="line">我已经死了</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;从结果可以看出，任何对象的finalize()方法都智慧被系统调用一次。</p>
+<p>&emsp;<strong>不建议使用finalize()方法来拯救对象</strong>，原因如下：</p>
+<ol>
+<li><p>任何对象的finalize()只能执行一次。</p>
+</li>
+<li><p>它的运行代价高昂。</p>
+</li>
+<li><p>不确定性大。</p>
+</li>
+<li><p>无法保证各个对象的调用顺序。</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java-JVM/" rel="tag"># -Java -JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/09/UML类图/" rel="next" title="【UML】类之间的关系图汇总">
+                <i class="fa fa-chevron-left"></i> 【UML】类之间的关系图汇总
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjgyNS8xOTM3Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/1.gif" alt="Y_uan">
+            
+              <p class="site-author-name" itemprop="name">Y_uan</p>
+              <p class="site-description motion-element" itemprop="description">Coding碎碎念</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在JVM中如何判断一个对象的生死状态？"><span class="nav-number">1.</span> <span class="nav-text">在JVM中如何判断一个对象的生死状态？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、引用计数器算法"><span class="nav-number">1.1.</span> <span class="nav-text">1、引用计数器算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、可达性分析算法"><span class="nav-number">1.2.</span> <span class="nav-text">2、可达性分析算法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对象生死与引用的关系"><span class="nav-number">2.</span> <span class="nav-text">对象生死与引用的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死亡标记与拯救"><span class="nav-number">3.</span> <span class="nav-text">死亡标记与拯救</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y_uan</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  undefined
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
