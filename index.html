@@ -292,6 +292,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/20190520Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/20/20190520Algorithm/" itemprop="url">20190520Algorithm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-20T15:49:46+08:00">
+                2019-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试题/" itemprop="url" rel="index">
+                    <span itemprop="name">面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1、判断奇偶数"><a href="#1、判断奇偶数" class="headerlink" title="1、判断奇偶数"></a>1、判断奇偶数</h3><p>&emsp;判断一个数是奇数还是偶数，相信很多人都做过，一般的做法的代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(n % <span class="number">2</span> == <span class="number">01</span>)&#123;</span><br><span class="line">  <span class="comment">// n是个奇数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;如果把n以二进制的形式展示的话，其实我们只需要判断最后一个二进制位是1还是0就行了，如果是1的话，代表是奇数；如果是0则代表是偶数，所以采用位运算的方式的话，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(n &amp; <span class="number">1</span> == <span class="number">1</span>)&#123;</span><br><span class="line">  <span class="comment">// n是个奇数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2、交换两个数"><a href="#2、交换两个数" class="headerlink" title="2、交换两个数"></a>2、交换两个数</h3><p>&emsp;例如，交换x与y值，传统代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> tmp = x;</span><br><span class="line">x = y;</span><br><span class="line">y = temp;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;如果不允许你使用额外的辅助变量来完成交换呢？这时候，位运算大法就来了，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = x ^ y   <span class="comment">// (1)</span></span><br><span class="line">y = x ^ y   <span class="comment">// (2)</span></span><br><span class="line">x = x ^ y   <span class="comment">// (3)</span></span><br></pre></td></tr></table></figure></p>
+<p>&emsp;我们知道，两个相同的数<strong>异或</strong>之后结果会等于0，即 n ^ n = 0。并且任何数与0异或等于它本身，即 n ^ 0 = n。所以，解释如下：</p>
+<p>把（1）中的x代入（2）中的x，有：</p>
+<p>y = x ^ y = (x ^ y) ^ y = x ^ (y ^ y) = x ^ 0 = x。 x的值成功赋给了y</p>
+<p>对于（3），推导如下：<br>x = x ^ y = (x ^ y) ^ x = (x ^ x) ^ y = 0 ^ y = y</p>
+<blockquote>
+<p>这里解释一下，异或运算支持运算的交换律和结合律哦。</p>
+</blockquote>
+<h3 id="3、找出没有重复的数"><a href="#3、找出没有重复的数" class="headerlink" title="3、找出没有重复的数"></a>3、找出没有重复的数</h3><blockquote>
+<p>给你一组整型数据，在这些数据中，其中有一个数只出现了一次，其他的数都出现了两次，让你找出这个数。</p>
+</blockquote>
+<p>&emsp;这道题可能很多人会用一个哈希表来存储，每次存储的时候，记录某个数出现的次数，最后再遍历哈希表，看看哪个数只出现了一次。这种方法的时间复杂度为O(n)，空间复杂度也为O(n)了。</p>
+<p>&emsp;我们刚才说过，两个相同的数异或的结果是0，一个数和0异或的结果是它本身，所以我们把这一组整型全部异或一下，例如这组数据是：1, 2, 3, 4, 5, 1, 2, 3, 4.其中5只出现了一次，其他都出现了两次，把他们全部异或一下，结果如下：</p>
+<p>&emsp;由于异或支持交换律和结合律，所以：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1 ^ 2 ^ 3 ^ 4 ^ 5 ^ 1 ^ 2 ^ 3 ^ 4</span><br><span class="line"></span><br><span class="line">= (1 ^ 1) ^ (2 ^ 2) ^ (3 ^ 3) ^ (4 ^ 4) ^ 5</span><br><span class="line"></span><br><span class="line">= 0 ^ 0 ^ 0 ^ 0 ^ 5 = 5</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;也就是说，那些出现了两次的数异或之后会变成0，那个出现一次的数，和0异或之后就等于它本身。所以代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tmp = arr[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= arr.length; i++)&#123;</span><br><span class="line">      tmp = tmp ^ arr[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="4、2的n次方"><a href="#4、2的n次方" class="headerlink" title="4、2的n次方"></a>4、2的n次方</h3><p>&emsp;如果让你求解2的n次方，并且不能使用系统自带的pow函数，你会怎么做呢？传统的做法是连续让n个2相乘，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pow</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tmp = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">      tmp = tmp * <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;但这样做的时间复杂度为O(n)，如果用位运算来做，你会怎么做呢？</p>
+<p>&emsp;举个例子，例如 n = 13，则n的二进制表示为1101，那么2的13次方可以拆解为：</p>
+<p>&emsp;<code>2 ^ 1101 = 2 ^ 0001 * 2 ^ 0100 * 2 ^ 1000</code></p>
+<p>&emsp;我们可以通过 <code>&amp; 1</code> 和 <code>&gt;&gt; 1</code> 来逐位读取1101，为1时将该位代表的乘数累乘到最终结果。代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pow</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> tmep = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(n != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n &amp; <span class="number">1</span> == <span class="number">1</span>)&#123;</span><br><span class="line">            sum *= tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;时间复杂度近为O(logn)。</p>
+<blockquote>
+<p>位运算很多情况下都是和二进制扯上关系的，所以我们要判断是否适合位运算，很多情况下都会把它们拆分成二进制，然后观察特性，或者就是利用与、或、异或的特性来观察。</p>
+</blockquote>
+<h3 id="5、找出不大于N的最大的2的幂指数"><a href="#5、找出不大于N的最大的2的幂指数" class="headerlink" title="5、找出不大于N的最大的2的幂指数"></a>5、找出不大于N的最大的2的幂指数</h3><p>&emsp;传统的做法就是让1不断乘以2，代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findN</span><span class="params">(<span class="keyword">int</span> N)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(sum * <span class="number">2</span> &gt; N)&#123;</span><br><span class="line">            <span class="keyword">return</span> sum;</span><br><span class="line">        &#125;</span><br><span class="line">        sum = sum * <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;这样做的话，时间复杂度是O(logn)，如果要弄成位运算的方式，该怎么做呢？</p>
+<p>&emsp;例如 N = 19，那么转换成二进制就是 00010011（这里为了方便，我采用8位的二进制来表示）。那么我们要找的数就是，把二进制中<strong>最左边的1保留，后面的1全部变为0</strong>。即我们的目标数是00010000，那么如何获得这个数呢？相应解法如下：</p>
+<ol>
+<li><p>找到最左边的1，然后把它右边的所有0变成1<br><div align="center"><br><img src="../images/190520算法/01.jpg"><br></div><br><br></p>
+</li>
+<li><p>把得到的数值加1，可以得到 00100000 即 00011111 + 1 = 00100000。</p>
+</li>
+<li><p>把得到的00100000向右移动一位，即可得到00010000，即 00100000 &gt;&gt; 1 = 00010000。</p>
+</li>
+</ol>
+<p>&emsp;问题在于，第一步中把最左边1中后面的0转化为1该怎么弄呢？代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">n |= n &gt;&gt; <span class="number">1</span>;</span><br><span class="line">n |= n &gt;&gt; <span class="number">2</span>;</span><br><span class="line">n |= n &gt;&gt; <span class="number">4</span>;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;通过把n右移并且做或运算即可得到。</p>
+<p>&emsp;我们假设最左边的1处于二进制位中的第k位（从左往右数），那么把n右移一位之后，那么得到的结果中第k+1位也必定为1，然后把n与有以后的结果做或运算，那么得到的结果中第k和第 k+1 位必定是 1；</p>
+<p>&emsp;同理，再次把n右移两位，那么得到的结果中第 k+2 和第 k+3 位必定是 1，然后再次做或运算，那么就能得到第 k，k+1，k+2，k+3都是1，如此往复下去。</p>
+<p>最终代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findN</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    n |= n &gt;&gt; <span class="number">1</span>;</span><br><span class="line">    n |= n &gt;&gt; <span class="number">2</span>;</span><br><span class="line">    n |= n &gt;&gt; <span class="number">4</span>;</span><br><span class="line">    n |= n &gt;&gt; <span class="number">8</span>;    <span class="comment">//整型一般是32位，上面假设是8位。</span></span><br><span class="line">    <span class="keyword">return</span> (n + <span class="number">1</span>) &gt;&gt; <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;这种做法的时间复杂度近似O(1)。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/15/20190515-JVM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -680,157 +865,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/【Python】pandas的group分组与agg聚合/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Y_uan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/1.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YY是个呆逼">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/08/【Python】pandas的group分组与agg聚合/" itemprop="url">【Python】pandas的group分组与agg聚合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T00:00:00+08:00">
-                2019-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">-服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">'Country'</span>:[<span class="string">'China'</span>, <span class="string">'China'</span>, <span class="string">'India'</span>, <span class="string">'India'</span>, <span class="string">'America'</span>, <span class="string">'Japan'</span>, <span class="string">'China'</span>, <span class="string">'India'</span>],</span><br><span class="line">                    <span class="string">'Income'</span>:[<span class="number">10000</span>, <span class="number">10000</span>, <span class="number">5000</span>, <span class="number">5002</span>, <span class="number">40000</span>, <span class="number">50000</span>, <span class="number">8000</span>, <span class="number">5000</span>],</span><br><span class="line">                    <span class="string">'Age'</span>:[<span class="number">5000</span>, <span class="number">4321</span>, <span class="number">1234</span>, <span class="number">4010</span>, <span class="number">250</span>, <span class="number">250</span>, <span class="number">4500</span>, <span class="number">4321</span>]&#125;)</span><br></pre></td></tr></table></figure>
-<p>构造的数据如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Age  Country  Income</span><br><span class="line">0  5000    China   10000</span><br><span class="line">1  4321    China   10000</span><br><span class="line">2  1234    India    5000</span><br><span class="line">3  4010    India    5002</span><br><span class="line">4   250  America   40000</span><br><span class="line">5   250    Japan   50000</span><br><span class="line">6  4500    China    8000</span><br><span class="line">7  4321    India    5000</span><br></pre></td></tr></table></figure></p>
-<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><h4 id="单列分组"><a href="#单列分组" class="headerlink" title="单列分组"></a>单列分组</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df_gb = df.groupby(<span class="string">'Country'</span>)</span><br><span class="line"><span class="keyword">for</span> index, data <span class="keyword">in</span> df_gb:</span><br><span class="line">    print(index)</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
-<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">America</span><br><span class="line">   Country  Income  Age</span><br><span class="line">4  America   40000  250</span><br><span class="line"></span><br><span class="line">China</span><br><span class="line">  Country  Income   Age</span><br><span class="line">0   China   10000  5000</span><br><span class="line">1   China   10000  4321</span><br><span class="line">6   China    8000  4500</span><br><span class="line"></span><br><span class="line">India</span><br><span class="line">  Country  Income   Age</span><br><span class="line">2   India    5000  1234</span><br><span class="line">3   India    5002  4010</span><br><span class="line">7   India    5000  4321</span><br><span class="line"></span><br><span class="line">Japan</span><br><span class="line">  Country  Income  Age</span><br><span class="line">5   Japan   50000  250</span><br></pre></td></tr></table></figure></p>
-<h4 id="多列分组"><a href="#多列分组" class="headerlink" title="多列分组"></a>多列分组</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df_gb = df.groupby([<span class="string">'Country'</span>, <span class="string">'Income'</span>])</span><br><span class="line"><span class="keyword">for</span> (index1, index2), data <span class="keyword">in</span> df_gb:</span><br><span class="line">    print((index1, index2))</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
-<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(&apos;America&apos;, 40000)</span><br><span class="line">   Country  Income  Age</span><br><span class="line">4  America   40000  250</span><br><span class="line"></span><br><span class="line">(&apos;China&apos;, 8000)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">6   China    8000  4500</span><br><span class="line"></span><br><span class="line">(&apos;China&apos;, 10000)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">0   China   10000  5000</span><br><span class="line">1   China   10000  4321</span><br><span class="line"></span><br><span class="line">(&apos;India&apos;, 5000)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">2   India    5000  1234</span><br><span class="line">7   India    5000  4321</span><br><span class="line"></span><br><span class="line">(&apos;India&apos;, 5002)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">3   India    5002  4010</span><br><span class="line"></span><br><span class="line">(&apos;Japan&apos;, 50000)</span><br><span class="line">  Country  Income  Age</span><br><span class="line">5   Japan   50000  250</span><br></pre></td></tr></table></figure></p>
-<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><h4 id="对分组后数据进行聚合"><a href="#对分组后数据进行聚合" class="headerlink" title="对分组后数据进行聚合"></a>对分组后数据进行聚合</h4><p><br><br>&emsp;默认情况对分组之后其他列进行聚合<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df_agg = df.groupby(<span class="string">'Country'</span>).agg([<span class="string">'min'</span>, <span class="string">'mean'</span>, <span class="string">'max'</span>])</span><br><span class="line">print(df_agg)</span><br></pre></td></tr></table></figure></p>
-<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Income                        Age</span><br><span class="line">   min          mean    max   min         mean   max</span><br><span class="line">Country</span><br><span class="line">America  40000  40000.000000  40000   250   250.000000   250</span><br><span class="line">China     8000   9333.333333  10000  4321  4607.000000  5000</span><br><span class="line">India     5000   5000.666667   5002  1234  3188.333333  4321</span><br><span class="line">Japan    50000  50000.000000  50000   250   250.000000   250</span><br></pre></td></tr></table></figure></p>
-<h4 id="对分组后的部分列进行聚合"><a href="#对分组后的部分列进行聚合" class="headerlink" title="对分组后的部分列进行聚合"></a>对分组后的部分列进行聚合</h4><p><br><br>&emsp;某些情况只需要对部分数据进行不同的聚合操作，可以通过字典来构建<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">num_agg = &#123;<span class="string">'Age'</span>:[<span class="string">'min'</span>, <span class="string">'mean'</span>, <span class="string">'max'</span>]&#125;</span><br><span class="line">print(df.groupby(<span class="string">'Country'</span>).agg(num_agg))</span><br></pre></td></tr></table></figure></p>
-<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Age</span><br><span class="line">min         mean   max</span><br><span class="line">Country</span><br><span class="line">America   250   250.000000   250</span><br><span class="line">China    4321  4607.000000  5000</span><br><span class="line">India    1234  3188.333333  4321</span><br><span class="line">Japan     250   250.000000   250</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -947,6 +981,157 @@
 <p><div align="center"><br><img src="../images/stack3.png"><br></div><br><br></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data2.unstack().stack()</span><br></pre></td></tr></table></figure>
 <p><div align="center"><br><img src="../images/stack4.png"><br></div><br><br></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/【Python】pandas的group分组与agg聚合/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/08/【Python】pandas的group分组与agg聚合/" itemprop="url">【Python】pandas的group分组与agg聚合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T00:00:00+08:00">
+                2019-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务端/" itemprop="url" rel="index">
+                    <span itemprop="name">-服务端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">'Country'</span>:[<span class="string">'China'</span>, <span class="string">'China'</span>, <span class="string">'India'</span>, <span class="string">'India'</span>, <span class="string">'America'</span>, <span class="string">'Japan'</span>, <span class="string">'China'</span>, <span class="string">'India'</span>],</span><br><span class="line">                    <span class="string">'Income'</span>:[<span class="number">10000</span>, <span class="number">10000</span>, <span class="number">5000</span>, <span class="number">5002</span>, <span class="number">40000</span>, <span class="number">50000</span>, <span class="number">8000</span>, <span class="number">5000</span>],</span><br><span class="line">                    <span class="string">'Age'</span>:[<span class="number">5000</span>, <span class="number">4321</span>, <span class="number">1234</span>, <span class="number">4010</span>, <span class="number">250</span>, <span class="number">250</span>, <span class="number">4500</span>, <span class="number">4321</span>]&#125;)</span><br></pre></td></tr></table></figure>
+<p>构造的数据如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Age  Country  Income</span><br><span class="line">0  5000    China   10000</span><br><span class="line">1  4321    China   10000</span><br><span class="line">2  1234    India    5000</span><br><span class="line">3  4010    India    5002</span><br><span class="line">4   250  America   40000</span><br><span class="line">5   250    Japan   50000</span><br><span class="line">6  4500    China    8000</span><br><span class="line">7  4321    India    5000</span><br></pre></td></tr></table></figure></p>
+<h2 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h2><h4 id="单列分组"><a href="#单列分组" class="headerlink" title="单列分组"></a>单列分组</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df_gb = df.groupby(<span class="string">'Country'</span>)</span><br><span class="line"><span class="keyword">for</span> index, data <span class="keyword">in</span> df_gb:</span><br><span class="line">    print(index)</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">America</span><br><span class="line">   Country  Income  Age</span><br><span class="line">4  America   40000  250</span><br><span class="line"></span><br><span class="line">China</span><br><span class="line">  Country  Income   Age</span><br><span class="line">0   China   10000  5000</span><br><span class="line">1   China   10000  4321</span><br><span class="line">6   China    8000  4500</span><br><span class="line"></span><br><span class="line">India</span><br><span class="line">  Country  Income   Age</span><br><span class="line">2   India    5000  1234</span><br><span class="line">3   India    5002  4010</span><br><span class="line">7   India    5000  4321</span><br><span class="line"></span><br><span class="line">Japan</span><br><span class="line">  Country  Income  Age</span><br><span class="line">5   Japan   50000  250</span><br></pre></td></tr></table></figure></p>
+<h4 id="多列分组"><a href="#多列分组" class="headerlink" title="多列分组"></a>多列分组</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">df_gb = df.groupby([<span class="string">'Country'</span>, <span class="string">'Income'</span>])</span><br><span class="line"><span class="keyword">for</span> (index1, index2), data <span class="keyword">in</span> df_gb:</span><br><span class="line">    print((index1, index2))</span><br><span class="line">    print(data)</span><br></pre></td></tr></table></figure>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(&apos;America&apos;, 40000)</span><br><span class="line">   Country  Income  Age</span><br><span class="line">4  America   40000  250</span><br><span class="line"></span><br><span class="line">(&apos;China&apos;, 8000)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">6   China    8000  4500</span><br><span class="line"></span><br><span class="line">(&apos;China&apos;, 10000)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">0   China   10000  5000</span><br><span class="line">1   China   10000  4321</span><br><span class="line"></span><br><span class="line">(&apos;India&apos;, 5000)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">2   India    5000  1234</span><br><span class="line">7   India    5000  4321</span><br><span class="line"></span><br><span class="line">(&apos;India&apos;, 5002)</span><br><span class="line">  Country  Income   Age</span><br><span class="line">3   India    5002  4010</span><br><span class="line"></span><br><span class="line">(&apos;Japan&apos;, 50000)</span><br><span class="line">  Country  Income  Age</span><br><span class="line">5   Japan   50000  250</span><br></pre></td></tr></table></figure></p>
+<h2 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h2><h4 id="对分组后数据进行聚合"><a href="#对分组后数据进行聚合" class="headerlink" title="对分组后数据进行聚合"></a>对分组后数据进行聚合</h4><p><br><br>&emsp;默认情况对分组之后其他列进行聚合<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df_agg = df.groupby(<span class="string">'Country'</span>).agg([<span class="string">'min'</span>, <span class="string">'mean'</span>, <span class="string">'max'</span>])</span><br><span class="line">print(df_agg)</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Income                        Age</span><br><span class="line">   min          mean    max   min         mean   max</span><br><span class="line">Country</span><br><span class="line">America  40000  40000.000000  40000   250   250.000000   250</span><br><span class="line">China     8000   9333.333333  10000  4321  4607.000000  5000</span><br><span class="line">India     5000   5000.666667   5002  1234  3188.333333  4321</span><br><span class="line">Japan    50000  50000.000000  50000   250   250.000000   250</span><br></pre></td></tr></table></figure></p>
+<h4 id="对分组后的部分列进行聚合"><a href="#对分组后的部分列进行聚合" class="headerlink" title="对分组后的部分列进行聚合"></a>对分组后的部分列进行聚合</h4><p><br><br>&emsp;某些情况只需要对部分数据进行不同的聚合操作，可以通过字典来构建<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">num_agg = &#123;<span class="string">'Age'</span>:[<span class="string">'min'</span>, <span class="string">'mean'</span>, <span class="string">'max'</span>]&#125;</span><br><span class="line">print(df.groupby(<span class="string">'Country'</span>).agg(num_agg))</span><br></pre></td></tr></table></figure></p>
+<p>输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Age</span><br><span class="line">min         mean   max</span><br><span class="line">Country</span><br><span class="line">America   250   250.000000   250</span><br><span class="line">China    4321  4607.000000  5000</span><br><span class="line">India    1234  3188.333333  4321</span><br><span class="line">Japan     250   250.000000   250</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -1925,143 +2110,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/21/post-title/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Y_uan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/1.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YY是个呆逼">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/21/post-title/" itemprop="url">post title</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-21T22:54:40+08:00">
-                2019-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="标题一"><a href="#标题一" class="headerlink" title="标题一"></a>标题一</h1><h2 id="标题二"><a href="#标题二" class="headerlink" title="标题二"></a>标题二</h2><h3 id="标题三"><a href="#标题三" class="headerlink" title="标题三"></a>标题三</h3><h4 id="标题四"><a href="#标题四" class="headerlink" title="标题四"></a>标题四</h4><h5 id="标题五"><a href="#标题五" class="headerlink" title="标题五"></a>标题五</h5><p><strong>这是加粗</strong></p>
-<p><del>这是横线</del></p>
-<ul>
-<li>无序列表</li>
-<li>无序列表</li>
-</ul>
-<ol>
-<li>有序列表1</li>
-<li>有序列表2</li>
-</ol>
-<p>‘内嵌代码’</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">代码段</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>引用</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2107,7 +2162,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2118,7 +2173,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2129,7 +2184,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
