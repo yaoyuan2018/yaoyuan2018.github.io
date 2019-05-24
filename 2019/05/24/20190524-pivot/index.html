@@ -88,7 +88,7 @@
 <meta property="og:description" content="pandas.pivot_table() 参数列表：    参数 说明     data DataFrame对象   values 源数据中的一列，数据透视表中用于观察分析的数据值，类似Excel中的值字段   index 源数据中的一列，数据透视表用于行索引的数据值，类似Excel中的行字段   column 源数据中的一列，数据透视表用于列索引的数据值，类似Excele中的列字段   aggf">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/05/24/images/190524透视表/pivot_01.png">
-<meta property="og:updated_time" content="2019-05-24T03:11:14.410Z">
+<meta property="og:updated_time" content="2019-05-24T06:52:56.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【Python】pandas数据透视表 pd.pivot_table()">
 <meta name="twitter:description" content="pandas.pivot_table() 参数列表：    参数 说明     data DataFrame对象   values 源数据中的一列，数据透视表中用于观察分析的数据值，类似Excel中的值字段   index 源数据中的一列，数据透视表用于行索引的数据值，类似Excel中的行字段   column 源数据中的一列，数据透视表用于列索引的数据值，类似Excele中的列字段   aggf">
@@ -413,6 +413,18 @@
 <tr>
 <td style="text-align:center"><code>aggfunc</code></td>
 <td style="text-align:left">根据当前的行、列索引生成的数据透视表中有多少个数据需要进行聚合时，对这多个数据需要进行的操作，默认为<code>np.mean()</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>fill_value</code></td>
+<td style="text-align:left">用于替换结果表中的缺失值</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>dropna</code></td>
+<td style="text-align:left">boolean，默认为True</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>margins_name</code></td>
+<td style="text-align:left">String，默认为“ALL”，当参数<code>margins</code>为True时，ALL行和列的名字</td>
 </tr>
 </tbody>
 </table>
