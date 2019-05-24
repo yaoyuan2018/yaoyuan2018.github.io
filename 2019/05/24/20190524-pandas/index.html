@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="python pandas,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1234factors = np.random.randn(9)&amp;gt;&amp;gt;&amp;gt; [-0.01866508  0.72088087  0.67396285  0.50709849 -2.0963765   1.1875407  0.56316144 -1.00214153  0.01905435] pd.qcut()qcut是根据这些值的频率来选择箱子的均匀间隔，即每个箱子中含有的数的数量">
+<meta name="keywords" content="python pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python】Pandas——qcut()与cut()的区别">
+<meta property="og:url" content="http://yoursite.com/2019/05/24/20190524-pandas/index.html">
+<meta property="og:site_name" content="YY是个呆逼">
+<meta property="og:description" content="1234factors = np.random.randn(9)&amp;gt;&amp;gt;&amp;gt; [-0.01866508  0.72088087  0.67396285  0.50709849 -2.0963765   1.1875407  0.56316144 -1.00214153  0.01905435] pd.qcut()qcut是根据这些值的频率来选择箱子的均匀间隔，即每个箱子中含有的数的数量">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-24T02:01:16.306Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【Python】Pandas——qcut()与cut()的区别">
+<meta name="twitter:description" content="1234factors = np.random.randn(9)&amp;gt;&amp;gt;&amp;gt; [-0.01866508  0.72088087  0.67396285  0.50709849 -2.0963765   1.1875407  0.56316144 -1.00214153  0.01905435] pd.qcut()qcut是根据这些值的频率来选择箱子的均匀间隔，即每个箱子中含有的数的数量">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/05/24/20190524-pandas/">
+
+
+
+
+
+  <title>【Python】Pandas——qcut()与cut()的区别 | YY是个呆逼</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?41fc030db57d5570dd22f78997dc4a7e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/yaoyuan2018" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">YY是个呆逼</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/24/20190524-pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【Python】Pandas——qcut()与cut()的区别</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-24T09:59:04+08:00">
+                2019-05-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据分析/" itemprop="url" rel="index">
+                    <span itemprop="name">数据分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">factors = np.random.randn(<span class="number">9</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="number">-0.01866508</span>  <span class="number">0.72088087</span>  <span class="number">0.67396285</span>  <span class="number">0.50709849</span> <span class="number">-2.0963765</span>   <span class="number">1.1875407</span></span><br><span class="line">  <span class="number">0.56316144</span> <span class="number">-1.00214153</span>  <span class="number">0.01905435</span>]</span><br></pre></td></tr></table></figure>
+<h4 id="pd-qcut"><a href="#pd-qcut" class="headerlink" title="pd.qcut()"></a>pd.qcut()</h4><p>qcut是根据这些值的频率来选择箱子的均匀间隔，即每个箱子中含有的数的数量是相同的。</p>
+<p>传入q参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pd.qcut(factors, <span class="number">3</span>)                   <span class="comment">#返回每个数对应的分组</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;[(<span class="number">-2.097</span>, <span class="number">0.00648</span>], (<span class="number">0.6</span>, <span class="number">1.188</span>], (<span class="number">0.6</span>, <span class="number">1.188</span>], (<span class="number">0.00648</span>, <span class="number">0.6</span>], (<span class="number">-2.097</span>, <span class="number">0.00648</span>], (<span class="number">0.6</span>, <span class="number">1.188</span>], (<span class="number">0.00648</span>, <span class="number">0.6</span>], (<span class="number">-2.097</span>, <span class="number">0.00648</span>], (<span class="number">0.00648</span>, <span class="number">0.6</span>]]</span><br><span class="line">Categories (<span class="number">3</span>, interval[float64]): [(<span class="number">-2.097</span>, <span class="number">0.00648</span>] &lt; (<span class="number">0.00648</span>, <span class="number">0.6</span>] &lt; (<span class="number">0.6</span>, <span class="number">1.188</span>]]</span><br><span class="line"></span><br><span class="line">pd.qcut(factors, <span class="number">3</span>).value_counts()    <span class="comment">#计算每个分组中含有的数的数量</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">(<span class="number">-2.097</span>, <span class="number">0.00648</span>]    <span class="number">3</span></span><br><span class="line">(<span class="number">0.00648</span>, <span class="number">0.6</span>]       <span class="number">3</span></span><br><span class="line">(<span class="number">0.6</span>, <span class="number">1.188</span>]         <span class="number">3</span></span><br><span class="line">dtype: int64</span><br></pre></td></tr></table></figure></p>
+<p>传入label参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pd.qcut(factors, <span class="number">3</span>, labels = [<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>])   <span class="comment">#返回每个数对应的分组，但分组名称由label指示</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[a, c, c, b, a, c, b, a, b]</span><br><span class="line">Categories (<span class="number">3</span>, object): [a &lt; b &lt; c]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pd.qcut(factors, <span class="number">3</span>, labels = <span class="keyword">False</span>)           <span class="comment">#返回每个数对应的分组，但仅显示分组下标</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="number">0</span> <span class="number">2</span> <span class="number">2</span> <span class="number">1</span> <span class="number">0</span> <span class="number">2</span> <span class="number">1</span> <span class="number">0</span> <span class="number">1</span>]</span><br></pre></td></tr></table></figure></p>
+<p>传入retbins参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pd.qcut(factors, <span class="number">3</span>, retbins=<span class="keyword">True</span>)             <span class="comment">#返回每个数对应的分组，且额外返回bins，即每个边界值</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>([(<span class="number">-2.097</span>, <span class="number">0.00648</span>], (<span class="number">0.6</span>, <span class="number">1.188</span>], (<span class="number">0.6</span>, <span class="number">1.188</span>], (<span class="number">0.00648</span>, <span class="number">0.6</span>], (<span class="number">-2.097</span>, <span class="number">0.00648</span>], (<span class="number">0.6</span>, <span class="number">1.188</span>], (<span class="number">0.00648</span>, <span class="number">0.6</span>], (<span class="number">-2.097</span>, <span class="number">0.00648</span>], (<span class="number">0.00648</span>, <span class="number">0.6</span>]]</span><br><span class="line">Categories (<span class="number">3</span>, interval[float64]): [(<span class="number">-2.097</span>, <span class="number">0.00648</span>] &lt; (<span class="number">0.00648</span>, <span class="number">0.6</span>] &lt; (<span class="number">0.6</span>, <span class="number">1.188</span>]], array([<span class="number">-2.0963765</span> ,  <span class="number">0.00648121</span>,  <span class="number">0.60009524</span>,  <span class="number">1.1875407</span> ]))</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:left">ndarray或Series</td>
+</tr>
+<tr>
+<td style="text-align:center">q</td>
+<td style="text-align:left">integer，指示划分的组数</td>
+</tr>
+<tr>
+<td style="text-align:center">labels</td>
+<td style="text-align:left">array或bool，默认为None。当传入数组时，分组的名称由label指示；当传入False时，仅显示分组下标</td>
+</tr>
+<tr>
+<td style="text-align:center">retbins</td>
+<td style="text-align:left">bool，是否返回bins，默认为False。当传入True时，额外返回bins，即每个边界值。</td>
+</tr>
+<tr>
+<td style="text-align:center">precision</td>
+<td style="text-align:left">int，精度，默认为3</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h4 id="pd-cut"><a href="#pd-cut" class="headerlink" title="pd.cut()"></a>pd.cut()</h4><p>&emsp;cut将根据值本身来选择箱子均匀间隔，即每个箱子的间距都是相同的</p>
+<p>传入bins参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">pd.cut(factors, <span class="number">3</span>)        <span class="comment">#返回每个数对应的数组</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[(<span class="number">-1.002</span>, <span class="number">0.0929</span>], (<span class="number">0.0929</span>, <span class="number">1.188</span>], (<span class="number">0.0929</span>, <span class="number">1.188</span>], (<span class="number">0.0929</span>, <span class="number">1.188</span>], (<span class="number">-2.1</span>, <span class="number">-1.002</span>], (<span class="number">0.0929</span>, <span class="number">1.188</span>], (<span class="number">0.0929</span>, <span class="number">1.188</span>], (<span class="number">-2.1</span>, <span class="number">-1.002</span>], (<span class="number">-1.002</span>, <span class="number">0.0929</span>]]</span><br><span class="line">Categories (<span class="number">3</span>, interval[float64]): [(<span class="number">-2.1</span>, <span class="number">-1.002</span>] &lt; (<span class="number">-1.002</span>, <span class="number">0.0929</span>] &lt; (<span class="number">0.0929</span>, <span class="number">1.188</span>]]</span><br><span class="line"></span><br><span class="line">pd.cut(factors, bins=[<span class="number">-3</span>, <span class="number">-2</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[(<span class="number">-1</span>, <span class="number">0</span>], (<span class="number">0</span>, <span class="number">1</span>], (<span class="number">0</span>, <span class="number">1</span>], (<span class="number">0</span>, <span class="number">1</span>], (<span class="number">-3</span>, <span class="number">-2</span>], (<span class="number">1</span>, <span class="number">2</span>], (<span class="number">0</span>, <span class="number">1</span>], (<span class="number">-2</span>, <span class="number">-1</span>], (<span class="number">0</span>, <span class="number">1</span>]]</span><br><span class="line">Categories (<span class="number">6</span>, interval[int64]): [(<span class="number">-3</span>, <span class="number">-2</span>] &lt; (<span class="number">-2</span>, <span class="number">-1</span>] &lt; (<span class="number">-1</span>, <span class="number">0</span>] &lt; (<span class="number">0</span>, <span class="number">1</span>] &lt; (<span class="number">1</span>, <span class="number">2</span>] &lt; (<span class="number">2</span>, <span class="number">3</span>]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pd.cut(factors, <span class="number">3</span>).value_counts() <span class="comment">#计算每个分组中含有的数的数量</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br><span class="line">(<span class="number">-2.1</span>, <span class="number">-1.002</span>]      <span class="number">2</span></span><br><span class="line">(<span class="number">-1.002</span>, <span class="number">0.0929</span>]    <span class="number">2</span></span><br><span class="line">(<span class="number">0.0929</span>, <span class="number">1.188</span>]     <span class="number">5</span></span><br><span class="line">dtype: int64</span><br></pre></td></tr></table></figure></p>
+<p>传入label参数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pd.cut(factors, <span class="number">3</span>, labels=[<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>])  <span class="comment">#返回每个数对应的分组，但分组名称由label指示</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[b, c, c, c, a, c, c, a, b]</span><br><span class="line">Categories (<span class="number">3</span>, object): [a &lt; b &lt; c]</span><br><span class="line"></span><br><span class="line">pd.cut(factors, <span class="number">3</span>, labels=<span class="keyword">False</span>)            <span class="comment">#返回每个数对应的分组，但仅显示分组下标</span></span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>[<span class="number">1</span> <span class="number">2</span> <span class="number">2</span> <span class="number">2</span> <span class="number">0</span> <span class="number">2</span> <span class="number">2</span> <span class="number">0</span> <span class="number">1</span>]</span><br></pre></td></tr></table></figure></p>
+<p>传入retbins参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pd.cut(factors, 3, retbins=True)            #返回每个数对应的分组，且额外返回bins，即每个边界值</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; ([(-1.002, 0.0929], (0.0929, 1.188], (0.0929, 1.188], (0.0929, 1.188], (-2.1, -1.002], (0.0929, 1.188], (0.0929, 1.188], (-2.1, -1.002], (-1.002, 0.0929]]</span><br><span class="line">Categories (3, interval[float64]): [(-2.1, -1.002] &lt; (-1.002, 0.0929] &lt; (0.0929, 1.188]], array([-2.09966042, -1.00173743,  0.09290163,  1.1875407 ]))</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:left">array，仅能使用一维数组</td>
+</tr>
+<tr>
+<td style="text-align:center">bins</td>
+<td style="text-align:left">Integer或sequence of scalars，指示划分的组数或指定组距</td>
+</tr>
+<tr>
+<td style="text-align:center">labels</td>
+<td style="text-align:left">array或bool，默认为None。当传入数组时，分组的名称由label指示；当传入False时，仅显示分组下标</td>
+</tr>
+<tr>
+<td style="text-align:center">retbins</td>
+<td style="text-align:left">bool，是否返回bins，默认为False。当传入True时，额外返回bins，即每个边界值</td>
+</tr>
+<tr>
+<td style="text-align:center">precision</td>
+<td style="text-align:left">int，精度，默认为3</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python-pandas/" rel="tag"># python pandas</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/20/【算法题】5个位运算小技巧/" rel="next" title="【算法题】5个位运算小技巧">
+                <i class="fa fa-chevron-left"></i> 【算法题】5个位运算小技巧
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjgyNS8xOTM3Mg=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/1.gif" alt="Y_uan">
+            
+              <p class="site-author-name" itemprop="name">Y_uan</p>
+              <p class="site-description motion-element" itemprop="description">Coding碎碎念</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#pd-qcut"><span class="nav-number">1.</span> <span class="nav-text">pd.qcut()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pd-cut"><span class="nav-number">2.</span> <span class="nav-text">pd.cut()</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Y_uan</span>
+
+  
+</div>
+
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  undefined
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true}});</script></body>
+</html>
