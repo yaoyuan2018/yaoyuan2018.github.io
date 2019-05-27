@@ -68,8 +68,7 @@
 
 
 
-  <meta name="keywords" content="-读书笔记
--python,">
+  <meta name="keywords" content="Python statsmodels,">
 
 
 
@@ -80,19 +79,33 @@
 
 
 
-<meta name="description" content="Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning. FutureWarning是语言或者库中将来可能改变的有关警告。 根据报警信息和参考相关文档“Default will changed from ‘libl">
-<meta name="keywords" content="-读书笔记
--python">
+<meta name="description" content="1、OLS说明最小二乘法： &amp;emsp;给定序列X( x1, x2, ..., xn ), y, 估计一个向量A（a0, a1, a2, ...）。令y&amp;#39; = a0 + a1 * x1 + a2 * x2 + ... + an * xn，使得(y&amp;#39; - y) ^ 2最小，计算A。 Summary示例：  参数说明：    参数名称 值 说明     Dep. Variable Re">
+<meta name="keywords" content="Python statsmodels">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python使用逻辑回归提示FutureWarning">
-<meta property="og:url" content="http://yoursite.com/2019/04/08/futurewarning/index.html">
+<meta property="og:title" content="【Python】statsmodels中的summary解读（使用OLS）">
+<meta property="og:url" content="http://yoursite.com/2019/05/27/190527olssummary/index.html">
 <meta property="og:site_name" content="YY是个呆逼">
-<meta property="og:description" content="Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning. FutureWarning是语言或者库中将来可能改变的有关警告。 根据报警信息和参考相关文档“Default will changed from ‘libl">
+<meta property="og:description" content="1、OLS说明最小二乘法： &amp;emsp;给定序列X( x1, x2, ..., xn ), y, 估计一个向量A（a0, a1, a2, ...）。令y&amp;#39; = a0 + a1 * x1 + a2 * x2 + ... + an * xn，使得(y&amp;#39; - y) ^ 2最小，计算A。 Summary示例：  参数说明：    参数名称 值 说明     Dep. Variable Re">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-09T09:03:31.204Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS1.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS2.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS3.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS4.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS5.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS6.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS7.png">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/Adj.gif">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/Adj2.gif">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/R2.gif">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/R2.gif">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/R2.gif">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/R2.gif">
+<meta property="og:image" content="http://yoursite.com/2019/05/27/images/190527OLS/R2.gif">
+<meta property="og:updated_time" content="2019-05-27T07:54:15.179Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python使用逻辑回归提示FutureWarning">
-<meta name="twitter:description" content="Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning. FutureWarning是语言或者库中将来可能改变的有关警告。 根据报警信息和参考相关文档“Default will changed from ‘libl">
+<meta name="twitter:title" content="【Python】statsmodels中的summary解读（使用OLS）">
+<meta name="twitter:description" content="1、OLS说明最小二乘法： &amp;emsp;给定序列X( x1, x2, ..., xn ), y, 估计一个向量A（a0, a1, a2, ...）。令y&amp;#39; = a0 + a1 * x1 + a2 * x2 + ... + an * xn，使得(y&amp;#39; - y) ^ 2最小，计算A。 Summary示例：  参数说明：    参数名称 值 说明     Dep. Variable Re">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/27/images/190527OLS/OLS1.png">
 
 
 
@@ -122,13 +135,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/08/futurewarning/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/27/190527olssummary/">
 
 
 
 
 
-  <title>Python使用逻辑回归提示FutureWarning | YY是个呆逼</title>
+  <title>【Python】statsmodels中的summary解读（使用OLS） | YY是个呆逼</title>
   
 
 
@@ -295,7 +308,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/futurewarning/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/27/190527olssummary/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Y_uan">
@@ -312,7 +325,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python使用逻辑回归提示FutureWarning</h1>
+          <h1 class="post-title" itemprop="name headline">【Python】statsmodels中的summary解读（使用OLS）</h1>
         
 
         <div class="post-meta">
@@ -324,8 +337,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T23:34:42+08:00">
-                2019-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-27T15:50:25+08:00">
+                2019-05-27
               </time>
             
 
@@ -334,6 +347,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据分析/" itemprop="url" rel="index">
+                    <span itemprop="name">数据分析</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -362,19 +397,126 @@
       
 
       
-        <h2 id="Python使用逻辑回归提示FutureWarning-Default-solver-will-be-changed-to-‘lbfgs’-in-0-22-Specify-a-solver-to-silence-this-warning"><a href="#Python使用逻辑回归提示FutureWarning-Default-solver-will-be-changed-to-‘lbfgs’-in-0-22-Specify-a-solver-to-silence-this-warning" class="headerlink" title="Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning."></a>Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning.</h2><hr>
-<p>FutureWarning是语言或者库中将来可能改变的有关警告。</p>
-<p>根据报警信息和参考相关文档“Default will changed from ‘liblinear’ to ‘lbfgs’ in 0.22.”，默认的solver参数在0.22版本中，将会由“liblinear”变为“lbfgs”，且指定solver参数可以消除该warning。</p>
-<p>LogisticRegression算法的solver仅支持以下几个参数：</p>
-<ul>
-<li>‘ liblinear ’</li>
-<li>‘ newton-cg ’</li>
-<li>‘ lbfgs ’</li>
-<li>‘ sag ’</li>
-<li>‘ saga ’</li>
-</ul>
-<p><strong>解决方法：</strong></p>
-<p>传入参数后即可消除警告：<code>model = LogisticRegression(solver = &#39;liblinear&#39;)`</code></p>
+        <h3 id="1、OLS说明"><a href="#1、OLS说明" class="headerlink" title="1、OLS说明"></a>1、OLS说明</h3><p>最小二乘法：</p>
+<p>&emsp;给定序列<code>X( x1, x2, ..., xn )</code>, <code>y</code>, 估计一个向量<code>A（a0, a1, a2, ...）</code>。令<br><code>y&#39; = a0 + a1 * x1 + a2 * x2 + ... + an * xn</code>，使得<code>(y&#39; - y) ^ 2</code>最小，计算A。</p>
+<p><strong>Summary示例：</strong></p>
+<p><div align="center"><br><img src="../images/190527OLS/OLS1.png"><br></div><br><br></p>
+<p><strong>参数说明：</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数名称</th>
+<th style="text-align:left">值</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>Dep. Variable</code></td>
+<td style="text-align:left">Rent</td>
+<td style="text-align:left">输出Y变量的名称Rent</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Model</code></td>
+<td style="text-align:left">OLS</td>
+<td style="text-align:left">使用的参数确定的模型OLS</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Method</code></td>
+<td style="text-align:left">Least Squares</td>
+<td style="text-align:left">使用最小二乘法确定参数</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Date</code></td>
+<td style="text-align:left">Mon, 27 May 2019</td>
+<td style="text-align:left">日期</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Time</code></td>
+<td style="text-align:left">14:47:10</td>
+<td style="text-align:left">时间</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>No. Observations</code></td>
+<td style="text-align:left">100</td>
+<td style="text-align:left">样本数目</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Df Residuals</code></td>
+<td style="text-align:left">97</td>
+<td style="text-align:left">残差的自由度（等于观测数<code>No. Observations</code> - 参数数目<code>Df Model + 1(常量参数)</code>）<br> 残差：指实际观察值与估计值（拟合值）之间的差</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Df Model</code></td>
+<td style="text-align:left">3</td>
+<td style="text-align:left">模型参数个数（不包含常量参数），对应于coef中的行数</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Covariance Type</code></td>
+<td style="text-align:left">nonrobust</td>
+<td style="text-align:left">协方差类型</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>R-squared</code></td>
+<td style="text-align:left">0.430</td>
+<td style="text-align:left">可决系数，说明估计的准确性<br>“可决系数”是通过数据的变化来表征一个拟合的好坏。由上面的表达式可以知道“确定系数”的正常取值范围为[0,1]，越接近1，表明方程的变量对y的解释能力越强，这个模型对数据拟合的也较好</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Adj. R-squared</code></td>
+<td style="text-align:left">0.413</td>
+<td style="text-align:left">修正方</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>F-statistic</code></td>
+<td style="text-align:left">24.42</td>
+<td style="text-align:left">衡量契合度的重要程度。模型的均方误差除以残差的均方误差</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Prob (F-statistic)</code></td>
+<td style="text-align:left">7.44e-12</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>Log-Likelihood</code></td>
+<td style="text-align:left">-34.305</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>AIC</code></td>
+<td style="text-align:left">74.61</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>BIC</code></td>
+<td style="text-align:left">82.42</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2、统计学相关参数："><a href="#2、统计学相关参数：" class="headerlink" title="2、统计学相关参数："></a>2、统计学相关参数：</h3><p><strong>SSE</strong>（和方差、误差平方和）：The sum of squares due to error</p>
+<p><strong>MES</strong>（均方差、方差）：Mean squared error</p>
+<p><strong>RMSE</strong>（均方根、标准差）：Root mean squared error</p>
+<p><strong>R-square</strong>（确定系数）：Coefficient of determination</p>
+<p><strong>Adjusted R-square</strong>：Degree-of-freedom adjusted Coefficient of determination</p>
+<h5 id="1-SSE（和方差）"><a href="#1-SSE（和方差）" class="headerlink" title="1. SSE（和方差）"></a>1. SSE（和方差）</h5><p>&emsp;该统计参数计算的是拟合数据和原始数据对应点的误差的平方和，计算公式如下：</p>
+<p><div align="center"><br><img src="../images/190527OLS/OLS2.png"><br></div><br><br><br>&emsp;SSE越接近于0，说明模型选择和拟合更好，数据预测也越成功。MSE和RMSE因为和SSE是同出一宗，所以效果一样。</p>
+<h5 id="2-MSE（均方差）"><a href="#2-MSE（均方差）" class="headerlink" title="2. MSE（均方差）"></a>2. MSE（均方差）</h5><p>&emsp;该统计参数是预测数据和原始数据对应点误差的平方和的均值，也就是SSE/n，和SSE没有太大的区别，计算公式如下：</p>
+<p><div align="center"><br><img src="../images/190527OLS/OLS3.png"><br></div><br><br></p>
+<h5 id="3-RMSE（均方根）"><a href="#3-RMSE（均方根）" class="headerlink" title="3. RMSE（均方根）"></a>3. RMSE（均方根）</h5><p>&emsp;该统计参数，也叫回归系统的拟合标准差，是MSE的平方根，计算公式如下：</p>
+<p><div align="center"><br><img src="../images/190527OLS/OLS4.png"><br></div><br><br></p>
+<p>&emsp;在这之前，我们所有的误差参数都是基于预测值（y_hat）和原始值（y）之间的误差（即点对点）。从下面开始是所有的误差都是相对原始数据平均值（y_ba）而展开的（即点对全）。</p>
+<h5 id="4-R-square（确定系数）"><a href="#4-R-square（确定系数）" class="headerlink" title="4. R-square（确定系数）"></a>4. R-square（确定系数）</h5><p>&emsp;在讲确定系数之前，我们需要介绍另外两个参数SSR和SST，因为确定系数就是由它们两个决定的。</p>
+<ol>
+<li><p>SSR：Sum of squares of the regression，即预测数据与原始数据均值之差的平方和，公式如下：<br><div align="center"><br><img src="../images/190527OLS/OLS5.png"><br></div><br><br></p>
+</li>
+<li><p>SST：Total sum of squares，即原始数据和均值之差的平方和，公式如下：<br><div align="center"><br><img src="../images/190527OLS/OLS6.png"><br></div><br><br></p>
+</li>
+</ol>
+<p>&emsp;你会发现，SST = SSE + SSR,而我们的“确定系数”是定义为SSR和SST的比值，故</p>
+<p><div align="center"><br><img src="../images/190527OLS/OLS7.png"><br></div><br><br><br>&emsp;“确定系数”是通过数据的变化来表征一个拟合的好坏。由上面的表达式可以知道“确定系数”的正常取值范围为[0, 1]，越接近1，表明方程的变量对y的解释能力越强，这个模型对数据的拟合也较好。</p>
+<h5 id="5-修正的公式-Adj-R-squared"><a href="#5-修正的公式-Adj-R-squared" class="headerlink" title="5. 修正的公式( Adj. R-squared )"></a>5. 修正<img src="../images/190527OLS/Adj.gif" alt="R">的公式( Adj. R-squared )</h5><p><img src="../images/190527OLS/Adj2.gif" alt="R">其中n是样本数量（No. Observations），p是模型中变量的个数（Df Model）。</p>
+<p>&emsp;我们知道在其他变量不变的情况下，引入新的变量，总能提高模型的<img src="../images/190527OLS/R2.gif" alt="R2">。修正<img src="../images/190527OLS/R2.gif" alt="R2">就是相当于给变量的个数加惩罚项。</p>
+<p>&emsp;换句话说，如果两个模型，样本数一样，<img src="../images/190527OLS/R2.gif" alt="R2">一样，那么从修正<img src="../images/190527OLS/R2.gif" alt="R2">的角度看，使用变量个数少的那个模型更优。使用修正<img src="../images/190527OLS/R2.gif" alt="R2">也算一种奥卡姆剃刀的实例。</p>
 
       
     </div>
@@ -392,8 +534,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/读书笔记-python/" rel="tag"># -读书笔记
--python</a>
+            <a href="/tags/Python-statsmodels/" rel="tag"># Python statsmodels</a>
           
         </div>
       
@@ -406,8 +547,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/08/python-array/" rel="next" title="Python矩阵中matrix()和array()函数区别">
-                <i class="fa fa-chevron-left"></i> Python矩阵中matrix()和array()函数区别
+              <a href="/2019/05/24/20190524-pivot/" rel="next" title="【Python】pandas数据透视表 pd.pivot_table()">
+                <i class="fa fa-chevron-left"></i> 【Python】pandas数据透视表 pd.pivot_table()
               </a>
             
           </div>
@@ -415,10 +556,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/" rel="prev" title="【Python】pandas轴旋转stack与unstack用法详解">
-                【Python】pandas轴旋转stack与unstack用法详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -557,7 +694,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Python使用逻辑回归提示FutureWarning-Default-solver-will-be-changed-to-‘lbfgs’-in-0-22-Specify-a-solver-to-silence-this-warning"><span class="nav-number">1.</span> <span class="nav-text">Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning.</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、OLS说明"><span class="nav-number">1.</span> <span class="nav-text">1、OLS说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、统计学相关参数："><span class="nav-number">2.</span> <span class="nav-text">2、统计学相关参数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-SSE（和方差）"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. SSE（和方差）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-MSE（均方差）"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. MSE（均方差）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-RMSE（均方根）"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. RMSE（均方根）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-R-square（确定系数）"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. R-square（确定系数）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-修正的公式-Adj-R-squared"><span class="nav-number">2.0.5.</span> <span class="nav-text">5. 修正的公式( Adj. R-squared )</span></a></li></ol></li></ol></div>
             
 
           </div>
