@@ -292,6 +292,162 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/python-array/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/08/python-array/" itemprop="url">Python矩阵中matrix()和array()函数区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T23:32:39+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/服务端/" itemprop="url" rel="index">
+                    <span itemprop="name">-服务端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="python矩阵中matrix-和array-函数区别"><a href="#python矩阵中matrix-和array-函数区别" class="headerlink" title="python矩阵中matrix()和array()函数区别"></a>python矩阵中matrix()和array()函数区别</h2><hr>
+<p>本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：</p>
+<ol>
+<li>使用numpy库生成指定矩阵的方法差异</li>
+<li>矩阵性质的差异</li>
+<li>在矩阵乘法的不同体现</li>
+<li>matrix()和array()关于秩的区别</li>
+<li>array()函数和mat()函数之间的转换</li>
+<li>一些基本知识</li>
+</ol>
+<h3 id="1、具体矩阵生成方式的不同："><a href="#1、具体矩阵生成方式的不同：" class="headerlink" title="1、具体矩阵生成方式的不同："></a>1、具体矩阵生成方式的不同：</h3><p>我们指定生成以下矩阵：</p>
+<p><div align="center"><br><img src="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="简单矩阵" title="简单矩阵"><br></div><br>选取此矩阵的原因是：二阶方便计算；矩阵可逆；逆函数容易得到(可口算出)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a1 = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">b1 = np.mat([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line">a2 = np.array(([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line">b2 = np.mat(([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line"></span><br><span class="line">a3 = np.array(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)))</span><br><span class="line">b3 = np.mat(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)))</span><br><span class="line"></span><br><span class="line">b4 = np.mat(<span class="string">'1 2; 3 4'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"\n"</span>,a1,<span class="string">"\n"</span>,b1,<span class="string">"\n"</span>,a2,<span class="string">"\n"</span>,b2,<span class="string">"\n"</span>,a3,<span class="string">"\n"</span>,b3,<span class="string">"\n"</span>,b4)</span><br></pre></td></tr></table></figure>
+<p>输出结果为：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span> <span class="number">2</span>]</span><br><span class="line">[<span class="number">3</span> <span class="number">4</span>]]</span><br></pre></td></tr></table></figure></p>
+<p>上述函数的变化无非就是把大括号内的”[]”换成”()”，但括起来的认为一个整体，不同之处在于b4内用括号、空格和分号来产生矩阵、这个方法只可以在maxtrix()函数中使用，不可以写成 a4 = np.array(‘1 2; 3 4’)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/java-reference/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1120,7 +1276,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1131,7 +1287,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1142,7 +1298,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
