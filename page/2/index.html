@@ -292,6 +292,138 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/futurewarning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/04/08/futurewarning/" itemprop="url">Python使用逻辑回归提示FutureWarning</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T23:34:42+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Python使用逻辑回归提示FutureWarning-Default-solver-will-be-changed-to-‘lbfgs’-in-0-22-Specify-a-solver-to-silence-this-warning"><a href="#Python使用逻辑回归提示FutureWarning-Default-solver-will-be-changed-to-‘lbfgs’-in-0-22-Specify-a-solver-to-silence-this-warning" class="headerlink" title="Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning."></a>Python使用逻辑回归提示FutureWarning: Default solver will be changed to ‘lbfgs’ in 0.22. Specify a solver to silence this warning.</h2><hr>
+<p>FutureWarning是语言或者库中将来可能改变的有关警告。</p>
+<p>根据报警信息和参考相关文档“Default will changed from ‘liblinear’ to ‘lbfgs’ in 0.22.”，默认的solver参数在0.22版本中，将会由“liblinear”变为“lbfgs”，且指定solver参数可以消除该warning。</p>
+<p>LogisticRegression算法的solver仅支持以下几个参数：</p>
+<ul>
+<li>‘ liblinear ’</li>
+<li>‘ newton-cg ’</li>
+<li>‘ lbfgs ’</li>
+<li>‘ sag ’</li>
+<li>‘ saga ’</li>
+</ul>
+<p><strong>解决方法：</strong></p>
+<p>传入参数后即可消除警告：<code>model = LogisticRegression(solver = &#39;liblinear&#39;)`</code></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/python-array/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1276,7 +1408,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1287,7 +1419,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1298,7 +1430,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
