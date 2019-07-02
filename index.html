@@ -292,6 +292,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/02/190702Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/02/190702Stream/" itemprop="url">【Java】Java 8的新特性——Stream</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-02T16:53:32+08:00">
+                2019-07-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Stream是什么"><a href="#Stream是什么" class="headerlink" title="Stream是什么"></a>Stream是什么</h3><p>&emsp;Stream是Java 8中添加的一个新特性，它与<code>java.io</code>包里的<code>InputStream</code>和<code>OutputStream</code>是完全不同的概念。它借助于Lambda表达式，可以让你以一种声明的方式处理数据，可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。</p>
+<h3 id="Stream-Demo"><a href="#Stream-Demo" class="headerlink" title="Stream Demo"></a>Stream Demo</h3><p>直接上Demo，感受一下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; myList = Array.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>, <span class="string">"d"</span>, <span class="string">"e"</span>);</span><br><span class="line">myList.stream()</span><br><span class="line">      .filter(s -&gt; s.startsWith(<span class="string">"1"</span>))</span><br><span class="line">      .map(String :: toUpperCase)</span><br><span class="line">      .sorted()</span><br><span class="line">      .foreach(System.out :: println)</span><br></pre></td></tr></table></figure></p>
+<h3 id="Stream如何工作"><a href="#Stream如何工作" class="headerlink" title="Stream如何工作"></a>Stream如何工作</h3><p>&emsp;当使用一个流的时候，通常包括三个基本步骤：</p>
+<ul>
+<li>获取一个数据源（source）</li>
+<li>数据转换</li>
+<li>执行操作获取想要的结果</li>
+</ul>
+<p>&emsp;每次转换原有Stream对象不改变，返回一个新的Stream对象（可以有多次转换），这就允许对其操作可以像链条一样排列，变成一个管道，如下图所示。</p>
+<div align="center"><br><img src="../images/190702Stream/Stream1.png"><br></div>
+
+<p>在Stream中，分为两种操作：</p>
+<ul>
+<li>中间操作</li>
+<li>结束操作</li>
+</ul>
+<p>&emsp;中间操作返回Stream，终端操作返回void或者非Stream结果。在demo中，<code>filter</code>、<code>map</code>、<code>sorted</code>都算是中间操作，而<code>foreach</code>是一个结束操作。</p>
+<h3 id="Stream如何生成"><a href="#Stream如何生成" class="headerlink" title="Stream如何生成"></a>Stream如何生成</h3><p>&emsp;创建Stream的方式很多，最常见的是从<code>Collections</code>、<code>List</code>、和<code>Set</code>中生成<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; myList = Arrays.asList(<span class="string">"a1"</span>, <span class="string">"a2"</span>, <span class="string">"b1"</span>, <span class="string">"c2"</span>, <span class="string">"c1"</span>);</span><br><span class="line">Stream&lt;String&gt; stream = myList.stream()</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;在对象myList上调用方法<code>stream()</code>返回一个常规对象Stream。</p>
+<p>&emsp;也可以从一堆已知对象中生成。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream = Stream.of(<span class="string">"a1"</span>, <span class="string">"a2"</span>, <span class="string">"a3"</span>)</span><br></pre></td></tr></table></figure></p>
+<p>当然了，还有其它方式：</p>
+<ul>
+<li>Collection.stream()</li>
+<li>Collection.parallelStream()</li>
+<li>BufferedReader.lines()</li>
+<li>Files.walk()</li>
+<li>BitSet.stream()</li>
+<li>Random.ints()</li>
+<li>JarFile.stream()</li>
+<li>……</li>
+</ul>
+<h3 id="常规操作"><a href="#常规操作" class="headerlink" title="常规操作"></a>常规操作</h3><h5 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a>forEach</h5><p><code>forEach</code>方法接收一个Lambda表达式，用来迭代流中的每个数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).forEach(System.out :: println)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="map"><a href="#map" class="headerlink" title="map"></a>map</h5><p><code>map</code>用于映射每个元素到对应的结果<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).map( i -&gt; i*i ).forEach(System.out :: println);</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 9</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h5><p><code>filter</code>用于通过设置的条件过滤出元素<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).filter( i -&gt; i == <span class="number">1</span>).forEach(System.out :: println);</span><br><span class="line"><span class="comment">// 1</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="limit"><a href="#limit" class="headerlink" title="limit"></a>limit</h5><p><code>limit</code>用于获取指定数量的流<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>).limit(<span class="number">2</span>).forEach(System.out :: println)</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h5><p><code>sorted</code>用于对流进行排序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Stream.of(<span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>).sorted().forEach(System.out :: println);</span><br><span class="line"><span class="comment">// 1</span></span><br><span class="line"><span class="comment">// 4</span></span><br><span class="line"><span class="comment">// 5</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="Match"><a href="#Match" class="headerlink" title="Match"></a>Match</h5><p>有三个match方法，从语义上说：</p>
+<ul>
+<li><code>allMatch</code>：Stream中全部元素符合传入的predicate，返回true</li>
+<li><code>anyMatch</code>：Stream中只要有一个元素符合传入的predicate，返回true</li>
+<li><code>noneMatch</code>：Stream中没有一个元素符合传入的predicate，返回true</li>
+</ul>
+<p>它们都不是要遍历全部元素才能返回结果。例如<code>allMatch</code>只要一个元素不满足条件，就skip剩下的所有元素，返回false。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">boolean</span> result = Stream.of(<span class="string">"a1"</span>, <span class="string">"a2"</span>, <span class="string">"a3"</span>).allMatch( i -&gt; i.startsWith(<span class="string">"a"</span>));</span><br><span class="line">System.out.println(result)</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure></p>
+<h5 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h5><p><code>reduce</code>方法根据指定的函数将元素序列积累到某个值。此方法有两个参数：</p>
+<ul>
+<li>起始值</li>
+<li>累加器函数</li>
+</ul>
+<p>如果有一个List，希望得到所有这些元素和一些初始值的总和。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int result = Stream.of(1, 2, 3).reduce(20, (a, b) -&gt; a + b);</span><br><span class="line">System.out.println(result)</span><br><span class="line">// 26</span><br></pre></td></tr></table></figure></p>
+<h5 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h5><p>Collectors类中提供了功能丰富的工具方法</p>
+<ul>
+<li><code>toList</code></li>
+<li><code>toSet</code></li>
+<li><code>toCollection</code></li>
+<li><code>toMap</code></li>
+<li>……</li>
+</ul>
+<p>而这些方法，都需要通过<code>collect</code>方法传入。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Set&lt;Integer&gt; result = Stream.of(<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>).collect(Collectors.toSet());</span><br><span class="line">System.out.println(result);</span><br><span class="line"><span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure></p>
+<p><code>collect</code>可以把Stream数据流转化为Collection对象。</p>
+<h3 id="骚技巧"><a href="#骚技巧" class="headerlink" title="骚技巧"></a>骚技巧</h3><h5 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h5><p>&emsp;除了常规的对象Stream，还有一些有特殊类型的Stream，用于处理基本数据类型int、long和double，它是IntStream、LongStream和DoubleStream。</p>
+<p>&emsp;比如可以使用<code>IntStream.range()</code>来代替常规的for循环。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IntStream.range(<span class="number">1</span>, <span class="number">4</span>).forEach(System.out :: println);</span><br></pre></td></tr></table></figure></p>
+<h5 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h5><p>Random的ints方法可以返回一个随机数据流，比如返回1到100的10个随机数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Random random = <span class="keyword">new</span> Random();</span><br><span class="line">random.ints(<span class="number">1</span>, <span class="number">100</span>).limit(<span class="number">10</span>).forEach(System.out :: println);</span><br></pre></td></tr></table></figure></p>
+<h5 id="大小写转化"><a href="#大小写转化" class="headerlink" title="大小写转化"></a>大小写转化</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; output = wordList.stream()</span><br><span class="line">  .map(String :: toUpperCase)</span><br><span class="line">  .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+<h3 id="总结：Stream特点"><a href="#总结：Stream特点" class="headerlink" title="总结：Stream特点"></a>总结：Stream特点</h3><ul>
+<li><strong>无存储</strong></li>
+</ul>
+<p>&emsp; Stream并不是一种数据结构，它只是某种数据源的一个视图</p>
+<ul>
+<li><strong>安全性</strong></li>
+</ul>
+<p>&emsp;对Stream的任何修改都不会修改背后的数据源，比如对stream执行过滤操作并不会删除被过滤的元素，而是产生一个不包含被过滤元素的新Stream。</p>
+<ul>
+<li><strong>惰式执行</strong></li>
+</ul>
+<p>&emsp;Stream上的操作并不会立即执行，只有等到用户真正需要结果的时候才会执行。</p>
+<ul>
+<li><strong>一次性</strong></li>
+</ul>
+<p>&emsp;Stream只能被“消费”一次，一旦遍历过就会失效，就像容器的迭代器那样，想要再次遍历必须重新生成。</p>
+<ul>
+<li><strong>lambda</strong></li>
+</ul>
+<p>&emsp;所有Stream的操作必须以lambda表达式为参数</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/19/20190619Redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2081,170 +2283,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Y_uan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/1.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YY是个呆逼">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/08/【Python】pandas轴旋转stack和unstack用法详解/" itemprop="url">【Python】pandas轴旋转stack与unstack用法详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T00:00:00+08:00">
-                2019-05-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">-服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>首先，要知道以下五点：</p>
-<ol>
-<li><code>stack</code> : 将数据的列“旋转”为行</li>
-<li><code>unstack</code> : 将数据的行“旋转”为列</li>
-<li><code>stack</code>和<code>unstack</code>默认操作为最内层</li>
-<li><code>stack</code>和<code>unstack</code>默认旋转轴的级别将会成果结果中的最低级别（最内层）</li>
-<li><code>stack</code>和<code>unstack</code>为一组逆运算操作</li>
-</ol>
-<p><strong>例1：创建DataFrame，行索引名为state，列索引名为number</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">data = pd.DataFrame(np.arange(<span class="number">6</span>).reshape((<span class="number">2</span>, <span class="number">3</span>)), index = pd.Index([<span class="string">'Ohio'</span>,<span class="string">'Colorado'</span>], name = <span class="string">'state'</span>),</span><br><span class="line">                columns = pd.Index([<span class="string">'one'</span>,<span class="string">'two'</span>,<span class="string">'three'</span>], name = <span class="string">'number'</span>))</span><br><span class="line">print(data)</span><br></pre></td></tr></table></figure></p>
-<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br></p>
-<p><strong>例2：将DataFrame的列旋转为行，即stack操作。</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">result = data.stack()</span><br><span class="line">print(result)</span><br></pre></td></tr></table></figure></p>
-<p><div align="center"><br><img src="../images/stack2.png"><br></div><br><br></p>
-<p>&emsp;stack操作后将列索引number旋转为行索引，并且置于行索引的最内层（外层为索引state），也就是将旋转轴（number）的结果置于最低级别。</p>
-<p><strong>例3：将DataFrame的行旋转为列，即unstack操作。</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.unstack()</span><br></pre></td></tr></table></figure></p>
-<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br><br>&emsp;第三点的意思是，unstack操作默认将内层索引number旋转为列索引。</p>
-<p>&emsp;同时，也可以指定分层级别或者索引名称来指定操作级别，下面做法同样会得到上面的结果。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.unstack(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result.unstack(<span class="string">'number'</span>)</span><br></pre></td></tr></table></figure></p>
-<p><div align="center"><br><img src="../images/stack1.png"><br></div><br><br></p>
-<p><strong>例4：stack和unstack逆运算</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s1 = pd.Series([<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>], index=list(<span class="string">'abcd'</span>))</span><br><span class="line">s2 = pd.Series([<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>], index=list(<span class="string">'cde'</span>))</span><br><span class="line">data2 = pd.concat([s1,s2], keys=[<span class="string">'one'</span>,<span class="string">'two'</span>])</span><br><span class="line">print(data2)</span><br></pre></td></tr></table></figure></p>
-<p><div align="center"><br><img src="../images/stack3.png"><br></div><br><br></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data2.unstack().stack()</span><br></pre></td></tr></table></figure>
-<p><div align="center"><br><img src="../images/stack4.png"><br></div><br><br></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2297,7 +2335,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2319,7 +2357,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
