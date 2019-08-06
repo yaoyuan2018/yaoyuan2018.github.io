@@ -68,8 +68,7 @@
 
 
 
-  <meta name="keywords" content="-Python
--矩阵,">
+  <meta name="keywords" content="Java,">
 
 
 
@@ -80,21 +79,21 @@
 
 
 
-<meta name="description" content="python矩阵中matrix()和array()函数区别 本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：  使用numpy库生成指定矩阵的方法差异 矩阵性质的差异 在矩阵乘法的不同体现 matrix()和array()关于秩的区别 array()函数和mat()函数之间的转换 一些基本知识  1、具体矩阵生成方式的不同：我们指定生成以下矩阵： 选取此矩">
-<meta name="keywords" content="-Python
--矩阵">
+<meta name="description" content="序言&amp;emsp;简单工厂模式是属于创建型模式，又叫做静态工厂方法（Static Factory Method），但不属于23种GOF设计模式之一。 简单工厂模式&amp;emsp;定义一个工厂类，他可以根据参数的不同返回不同的类实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态方法，因此简单工厂模式又被称为静态工厂方法，它属于创建型模式。   在简单工厂模式有三个基本角色">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python矩阵中matrix()和array()函数区别">
-<meta property="og:url" content="http://yoursite.com/2019/04/08/python-array/index.html">
+<meta property="og:title" content="【Java】设计模式之简单工厂模式">
+<meta property="og:url" content="http://yoursite.com/2019/08/06/20190805Factory/index.html">
 <meta property="og:site_name" content="YY是个呆逼">
-<meta property="og:description" content="python矩阵中matrix()和array()函数区别 本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：  使用numpy库生成指定矩阵的方法差异 矩阵性质的差异 在矩阵乘法的不同体现 matrix()和array()关于秩的区别 array()函数和mat()函数之间的转换 一些基本知识  1、具体矩阵生成方式的不同：我们指定生成以下矩阵： 选取此矩">
+<meta property="og:description" content="序言&amp;emsp;简单工厂模式是属于创建型模式，又叫做静态工厂方法（Static Factory Method），但不属于23种GOF设计模式之一。 简单工厂模式&amp;emsp;定义一个工厂类，他可以根据参数的不同返回不同的类实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态方法，因此简单工厂模式又被称为静态工厂方法，它属于创建型模式。   在简单工厂模式有三个基本角色">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
-<meta property="og:updated_time" content="2019-04-09T09:03:31.208Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/06/images/190805Factory/01.png">
+<meta property="og:image" content="http://yoursite.com/2019/08/06/images/190805Factory/02.jpg">
+<meta property="og:updated_time" content="2019-08-06T03:32:37.914Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Python矩阵中matrix()和array()函数区别">
-<meta name="twitter:description" content="python矩阵中matrix()和array()函数区别 本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：  使用numpy库生成指定矩阵的方法差异 矩阵性质的差异 在矩阵乘法的不同体现 matrix()和array()关于秩的区别 array()函数和mat()函数之间的转换 一些基本知识  1、具体矩阵生成方式的不同：我们指定生成以下矩阵： 选取此矩">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta name="twitter:title" content="【Java】设计模式之简单工厂模式">
+<meta name="twitter:description" content="序言&amp;emsp;简单工厂模式是属于创建型模式，又叫做静态工厂方法（Static Factory Method），但不属于23种GOF设计模式之一。 简单工厂模式&amp;emsp;定义一个工厂类，他可以根据参数的不同返回不同的类实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态方法，因此简单工厂模式又被称为静态工厂方法，它属于创建型模式。   在简单工厂模式有三个基本角色">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/06/images/190805Factory/01.png">
 
 
 
@@ -124,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/04/08/python-array/">
+  <link rel="canonical" href="http://yoursite.com/2019/08/06/20190805Factory/">
 
 
 
 
 
-  <title>Python矩阵中matrix()和array()函数区别 | YY是个呆逼</title>
+  <title>【Java】设计模式之简单工厂模式 | YY是个呆逼</title>
   
 
 
@@ -297,7 +296,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/08/python-array/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/06/20190805Factory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Y_uan">
@@ -314,7 +313,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Python矩阵中matrix()和array()函数区别</h1>
+          <h1 class="post-title" itemprop="name headline">【Java】设计模式之简单工厂模式</h1>
         
 
         <div class="post-meta">
@@ -326,8 +325,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T23:32:39+08:00">
-                2019-04-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-06T11:30:26+08:00">
+                2019-08-06
               </time>
             
 
@@ -336,28 +335,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/服务端/" itemprop="url" rel="index">
-                    <span itemprop="name">-服务端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -386,21 +363,54 @@
       
 
       
-        <h2 id="python矩阵中matrix-和array-函数区别"><a href="#python矩阵中matrix-和array-函数区别" class="headerlink" title="python矩阵中matrix()和array()函数区别"></a>python矩阵中matrix()和array()函数区别</h2><hr>
-<p>本篇主要介绍内容是矩阵中matrix()和array()函数的区别。主要从以下几方面说起：</p>
-<ol>
-<li>使用numpy库生成指定矩阵的方法差异</li>
-<li>矩阵性质的差异</li>
-<li>在矩阵乘法的不同体现</li>
-<li>matrix()和array()关于秩的区别</li>
-<li>array()函数和mat()函数之间的转换</li>
-<li>一些基本知识</li>
-</ol>
-<h3 id="1、具体矩阵生成方式的不同："><a href="#1、具体矩阵生成方式的不同：" class="headerlink" title="1、具体矩阵生成方式的不同："></a>1、具体矩阵生成方式的不同：</h3><p>我们指定生成以下矩阵：</p>
-<p><div align="center"><br><img src="https://img-blog.csdn.net/20170907125434040?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGZqNzQyMzQ2MDY2/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="简单矩阵" title="简单矩阵"><br></div><br>选取此矩阵的原因是：二阶方便计算；矩阵可逆；逆函数容易得到(可口算出)。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">a1 = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line">b1 = np.mat([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line">a2 = np.array(([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line">b2 = np.mat(([<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]))</span><br><span class="line"></span><br><span class="line">a3 = np.array(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)))</span><br><span class="line">b3 = np.mat(((<span class="number">1</span>, <span class="number">2</span>), (<span class="number">3</span>, <span class="number">4</span>)))</span><br><span class="line"></span><br><span class="line">b4 = np.mat(<span class="string">'1 2; 3 4'</span>)</span><br><span class="line"></span><br><span class="line">print(<span class="string">"\n"</span>,a1,<span class="string">"\n"</span>,b1,<span class="string">"\n"</span>,a2,<span class="string">"\n"</span>,b2,<span class="string">"\n"</span>,a3,<span class="string">"\n"</span>,b3,<span class="string">"\n"</span>,b4)</span><br></pre></td></tr></table></figure>
-<p>输出结果为：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span> <span class="number">2</span>]</span><br><span class="line">[<span class="number">3</span> <span class="number">4</span>]]</span><br></pre></td></tr></table></figure></p>
-<p>上述函数的变化无非就是把大括号内的”[]”换成”()”，但括起来的认为一个整体，不同之处在于b4内用括号、空格和分号来产生矩阵、这个方法只可以在maxtrix()函数中使用，不可以写成 a4 = np.array(‘1 2; 3 4’)</p>
+        <h3 id="序言"><a href="#序言" class="headerlink" title="序言"></a>序言</h3><p>&emsp;简单工厂模式是属于创建型模式，又叫做<strong>静态工厂方法（Static Factory Method）</strong>，但不属于23种GOF设计模式之一。</p>
+<h3 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h3><p>&emsp;定义一个工厂类，他可以根据参数的不同返回不同的类实例，被创建的实例通常都具有共同的父类。因为在简单工厂模式中用于创建实例的方法是静态方法，因此简单工厂模式又被称为静态工厂方法，它属于创建型模式。</p>
+<div align="center"><br><img src="../images/190805Factory/01.png"><br></div>
+
+<p>在简单工厂模式有三个基本角色：</p>
+<ul>
+<li><p><strong>Product（抽象的产品角色）：</strong>它是工厂类所创建对象的父类，封装了所有产品对象共有的方法。</p>
+</li>
+<li><p><strong>ConcreteProduct（具体产品角色）：</strong>继承抽象产品角色，它是简单工厂模式所创建目标，工厂类返回的对象都是该某一具体产品角色。</p>
+</li>
+<li><p><strong>Factory（工厂角色）：</strong>是简单工厂模式的核心，它负责实现创建所有具体产品的实例的内部逻辑，工厂类可以被外界直接调用，创建所需的产品对象。</p>
+</li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>抽象产品角色<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>具体产品角色<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductA</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConcreteProductB</span> <span class="keyword">extends</span> <span class="title">Product</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>工厂角色<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Factory</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Product <span class="title">factoryMethod</span><span class="params">(String type)</span></span>&#123;</span><br><span class="line">        Product product = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span>(type)&#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"A"</span>:</span><br><span class="line">                product = <span class="keyword">new</span> ConcreteProductA();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"B"</span>:</span><br><span class="line">                product = <span class="keyword">new</span> ConcreteProductB();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> product;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>客户端测试<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="comment">//调用工厂类的静态方法，根据参数A来获取ConcreteProductA对象</span></span><br><span class="line">        Product productA = Factory.factoryMethod(<span class="string">"A"</span>);</span><br><span class="line">        <span class="comment">//获取ConcreteProductB对象</span></span><br><span class="line">        Product productB = Factory.factoryMethod(<span class="string">"B"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp; 可以看到当客户端想要哪个具体产品对象时，只要通过工厂类调用工厂方法，根据传的参数不同来获取相应的产品对象，无需知道其创建的细节。</p>
+<h3 id="简单工厂模式的简化"><a href="#简单工厂模式的简化" class="headerlink" title="简单工厂模式的简化"></a>简单工厂模式的简化</h3><p>&emsp;在某些时候，为了简化工厂模式，我们可以将抽象产品类和工厂类合并，即把工厂类中的工厂方法移至抽象产品类中。</p>
+<div align="center"><br><img src="../images/190805Factory/02.jpg"><br></div>
+
+<p>&emsp;在UML类图中，客户端可以通过具体产品父类的静态工厂方法创建，根据不同的参数来创建不同的产品子类对象。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li><p>简单工厂模式也称为静态工厂模式，它属于类创建型模式。根据参数的不同返回不同类的实例。</p>
+</li>
+<li><p>简单工厂模式提供一个工厂类用于创建对象，工厂类中的工厂方法一般是静态方法。</p>
+</li>
+<li><p>有时简化后的简单工厂模式会把工厂类中工厂方法移至抽象产品类中。</p>
+</li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ul>
+<li><p>将对象的创建与使用分离，将对象的创建交给工厂类负责。</p>
+</li>
+<li><p>客户端无需知道所创建的具体产品类的类名，只要知道具体产品类所对应的参数即可，然后通过工厂类获取。</p>
+</li>
+</ul>
+<h5 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h5><ul>
+<li><p>工厂类集中了所有产品的创建逻辑，职责过重，一旦有问题会导致整个系统受影响。</p>
+</li>
+<li><p>如果引入新的具体产品，就会导致去修改工厂类的逻辑，不符合“开闭原则”。</p>
+</li>
+</ul>
+<h6 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h6><ul>
+<li><p>工厂类所创建的对象比较少。</p>
+</li>
+<li><p>客户端只知道传入工厂类中工厂方法中的参数，对于如何创建对象并不关心。</p>
+</li>
+</ul>
 
       
     </div>
@@ -418,8 +428,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Python-矩阵/" rel="tag"># -Python
--矩阵</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
           
         </div>
       
@@ -432,8 +441,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/08/java-reference/" rel="next" title="Java的4种引用类型">
-                <i class="fa fa-chevron-left"></i> Java的4种引用类型
+              <a href="/2019/07/02/190702Stream/" rel="next" title="【Java】Java 8的新特性——Stream">
+                <i class="fa fa-chevron-left"></i> 【Java】Java 8的新特性——Stream
               </a>
             
           </div>
@@ -441,10 +450,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/04/08/futurewarning/" rel="prev" title="Python使用逻辑回归提示FutureWarning">
-                Python使用逻辑回归提示FutureWarning <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -583,7 +588,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#python矩阵中matrix-和array-函数区别"><span class="nav-number">1.</span> <span class="nav-text">python矩阵中matrix()和array()函数区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、具体矩阵生成方式的不同："><span class="nav-number">1.1.</span> <span class="nav-text">1、具体矩阵生成方式的不同：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#序言"><span class="nav-number">1.</span> <span class="nav-text">序言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂模式"><span class="nav-number">2.</span> <span class="nav-text">简单工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂模式的简化"><span class="nav-number">4.</span> <span class="nav-text">简单工厂模式的简化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优缺点"><span class="nav-number">6.</span> <span class="nav-text">优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#优点"><span class="nav-number">6.0.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缺点"><span class="nav-number">6.0.2.</span> <span class="nav-text">缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#适用场景"><span class="nav-number">6.0.2.1.</span> <span class="nav-text">适用场景</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
