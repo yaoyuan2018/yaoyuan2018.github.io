@@ -292,6 +292,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/04/190904-Generics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Y_uan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/1.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YY是个呆逼">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/04/190904-Generics/" itemprop="url">【Java】泛型中的通配符T，E，K，V，?</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-04T15:55:23+08:00">
+                2019-09-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><a href="http://rrd.me/ekGHE" target="_blank" rel="noopener">原文来源</a></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Java泛型（generics）是JDK5中引入的一个新特性，泛型提供了编译时类型安全监测机制，该机制允许开发者在编译时检测到非法的类型。</p>
+<p>泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。</p>
+<h3 id="泛型带来的好处"><a href="#泛型带来的好处" class="headerlink" title="泛型带来的好处"></a>泛型带来的好处</h3><p>&emsp;在没有泛型的情况下，通过对类型Object的引用来实现参数的“任意化”，“任意化”带来的缺点是要做显式的强制类型转换，而这种转换是要求开发者对实际参数类型可以预知的情况下进行的。<br>对于强制类型转换错误的情况，编译器可能不提示错误，在运行的时候才出现异常，这是本身就是一个安全隐患。</p>
+<p>&emsp;那么泛型的好处就是在编译的时候能够检查类型安全，并且<strong>所有的强制转换都是自动和隐式的</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GlmapperGeneric</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T t;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T t)</span> </span>&#123; <span class="keyword">this</span>.t = t; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> t; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// do nothing</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    *不指定类型</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">noSpecifyType</span><span class="params">()</span></span>&#123;</span><br><span class="line">      GlmapperGeneric glmapperGeneric = <span class="keyword">new</span> GlmapperGeneric();</span><br><span class="line">      glmapperGeneric.set(<span class="string">"test"</span>);</span><br><span class="line">      <span class="comment">// 需要强制类型转换</span></span><br><span class="line">      String test = (String) glmapperGeneric.get();</span><br><span class="line">      System.out.println(test);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    *指定类型</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">SpecifyType</span><span class="params">()</span></span>&#123;</span><br><span class="line">      GlmapperGeneric&lt;String&gt; glmapperGeneric.get();</span><br><span class="line">      glmapperGeneric.set(<span class="string">"test"</span>);</span><br><span class="line">      <span class="comment">// 不需要强制类型转换</span></span><br><span class="line">      String test = glmapperGeneric.get();</span><br><span class="line">      System.out.println(test);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;上面这段代码中的specifyType方法中省去了强制转换，可以在编译的时候检查类型安全，可以用在类，方法，接口上。</p>
+<h3 id="泛型中通配符"><a href="#泛型中通配符" class="headerlink" title="泛型中通配符"></a>泛型中通配符</h3><p>&emsp;我们在定义泛型类，泛型方法，泛型接口的时候经常会碰见很多不同的通配符，比如T，E，K，V等等，这些通配符又都是什么意思呢？</p>
+<h4 id="常用的T，E，K，V，"><a href="#常用的T，E，K，V，" class="headerlink" title="常用的T，E，K，V，?"></a>常用的T，E，K，V，?</h4><p>&emsp;本质上这些嗾使通配符，没啥区别，只不过是编码时的一种约定俗成的东西。比如上述代码中的T，我们可以换成A-Z之间任何一个字母都可以，并不会影响程序的正常运行，但是如果换成其他的字母代替T，在可读性上可能会弱一些。<br><strong>通常情况下，T，E，K，V，?是这样约定的：</strong></p>
+<ul>
+<li>? 表示不确定的java类型</li>
+<li>T（type）表示具体的一个java类型</li>
+<li>K V （key value）分别代表java键值中的Key Value</li>
+<li>E （element）代表Element</li>
+</ul>
+<h4 id="无界通配符"><a href="#无界通配符" class="headerlink" title="? 无界通配符"></a>? 无界通配符</h4><p>下面先从一个小例子看起：</p>
+<p>&emsp;我有一个父类Animal和几个子类，如狗、猫等，现在我需要一个动物的列表，我的第一个想法是像这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Animal&gt; listAnimals</span><br></pre></td></tr></table></figure></p>
+<p>但老板的想法却是这样的：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;? extends Animal&gt; listAnimals</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;为什么要使用通配符而不是简单的泛型呢？通配符其实在声明局部变量时是没有什么意义的，但是当你为一个方法声明一个参数时，它是非常重要的。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">countlegs</span> <span class="params">(List&lt;? extends Animal&gt; animals)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> retVal = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( Animal animal : animals )</span><br><span class="line">    &#123;</span><br><span class="line">        retVal += animal.countLegs();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> retVal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">countLegs1</span> <span class="params">(List&lt;Animal&gt; animals)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> retVal = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( Animal animal : animals )</span><br><span class="line">    &#123;</span><br><span class="line">        retVal += animal.countLegs();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> retVal;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">    List&lt;Dog&gt; dogs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="comment">// 不会报错</span></span><br><span class="line">    countLegs(dogs);</span><br><span class="line">    <span class="comment">// 报错</span></span><br><span class="line">    countLegs1(dogs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;当调用countLegs1时，就会飘红，提示的错误信息如下：</p>
+<div align="center"><br><img src="../images/190904Generics/error.jpg"><br></div>
+
+<p>&emsp;所以，对于不确定或者不关心实际要操作的类型，可以使用无限制通配符（尖括号里一个问号，即&lt;?&gt;），表示可以持有任何类型。像countLegs方法中，限定了上界，但是不关心具体类型是什么，所以对于传入的Animal的所有子类都可以支持，并且不会报错。而countLegs1就不行。</p>
+<h3 id="上界通配符-lt-extends-E-gt"><a href="#上界通配符-lt-extends-E-gt" class="headerlink" title="上界通配符 &lt; ? extends E &gt;"></a>上界通配符 &lt; ? extends E &gt;</h3><blockquote>
+<p>上界：用extends关键字声明，表示参数化的类型可能是所指定的类型，或者是此类型的子类。</p>
+</blockquote>
+<p>&emsp;在类型参数中使用extends表示这个泛型中的参数必须是E或者E的子类，这样有两个好处：</p>
+<ul>
+<li><p>如果传入的类型不是 E 或者 E 的子类，编译不成功</p>
+</li>
+<li><p>泛型中可以使用 E 的方法，要不然还得强转成 E 才能使用</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> &lt;K extends A, E extends B&gt; <span class="function">E <span class="title">test</span><span class="params">(K arg1, E arg2)</span> </span>&#123;</span><br><span class="line">    E result = arg2;</span><br><span class="line">    arg2.compareTo(arg1);</span><br><span class="line">    <span class="comment">//.....</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>类型参数列表中如果有多个类型参数上线，用逗号分开</p>
+</blockquote>
+<h3 id="下界通配符-lt-super-E-gt"><a href="#下界通配符-lt-super-E-gt" class="headerlink" title="下界通配符 &lt; ? super E &gt;"></a>下界通配符 &lt; ? super E &gt;</h3><blockquote>
+<p>下界：用super进行声明，表示参数化的类型可能是所指定的类型，或者是此类型的父类型，直至Object</p>
+</blockquote>
+<p>在类型参数中使用super表示这个泛型中的参数必须是 E 或者 E 的父类。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(List&lt;? <span class="keyword">super</span> T&gt; dst, List&lt;T&gt; src)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (T t : src) &#123;</span><br><span class="line">        dst.add(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    List&lt;Dog&gt; dogs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;Animal&gt; animals = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">new</span> Test3().test(animals, dogs);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Dog 是 Animal 的子类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span> <span class="keyword">extends</span> <span class="title">Animal</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;dst类型“大于等于”src的类型，这里的“大于等于”是指dst表示的范围比 src 要大，因此装得下 dst 的容器也就能装得下 src。</p>
+<h3 id="和-T-的区别"><a href="#和-T-的区别" class="headerlink" title="? 和 T 的区别"></a>? 和 T 的区别</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 指定集合元素只能是 T 类型</span></span><br><span class="line">List&lt;T&gt; list = <span class="keyword">new</span> ArrayList&lt;T&gt;();</span><br><span class="line"><span class="comment">// 集合元素可以是任意类型，这种没有意义，一般是方法中，只是为了说明用法</span></span><br><span class="line">List&lt;?&gt; list = <span class="keyword">new</span> ArrayList&lt;?&gt;();</span><br></pre></td></tr></table></figure>
+<p>&emsp;? 和 T 都表示不确定的类型，区别在于我们可以对 T 进行操作，但是对 ? 不行，比如如下这种：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以</span></span><br><span class="line">T t = operate();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不可以</span></span><br><span class="line">? car = operate();</span><br></pre></td></tr></table></figure>
+<p>简单总结下：</p>
+<p>&emsp;T 是一个确定的类型，通常用于泛型类和泛型方法的定义，? 是一个不确定的类型，通常用于泛型方法的调用代码和形参，不能用于定义类和泛型方法。</p>
+<h4 id="区别1：通过-T-来确保泛型参数的一致性"><a href="#区别1：通过-T-来确保泛型参数的一致性" class="headerlink" title="区别1：通过 T 来确保泛型参数的一致性"></a>区别1：通过 T 来确保泛型参数的一致性</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 T 来确保泛型参数的一致性</span></span><br><span class="line"><span class="keyword">public</span> &lt;T extends Number&gt; <span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(List&lt;T&gt; dest, List&lt;T&gt; src)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 通配符是不确定的，所以这个方法不能保证两个 List 具有相同的元素类型</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">(List&lt;? extends Number&gt; dest, List&lt;? extends Number&gt; src)</span></span></span><br></pre></td></tr></table></figure>
+<p>&emsp;像下面的代码中，约定的 T 是 Number 的子类才可以，但是申明时是用的 String，所以就会飘红报错。</p>
+<div align="center"><br><img src="../images/190904Generics/error2.jpg"><br></div>
+
+<p>&emsp;不能保证两个 List 具有相同的元素类型的情况</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">GlmapperGeneric&lt;String&gt; glmapperGeneric = <span class="keyword">new</span> GlmapperGeneric&lt;&gt;();</span><br><span class="line">List&lt;String&gt; dest = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;Number&gt; src = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">glmapperGeneric.testNon(dest, src);</span><br></pre></td></tr></table></figure>
+<p>&emsp;上面的代码在编译器不会报错，但是当进入到testNon方法内部操作时（比如赋值），对于 dest 和 src 而言，就还是需要进行类型转换。</p>
+<h3 id="区别2：类型参数可以多重限定而通配符不行"><a href="#区别2：类型参数可以多重限定而通配符不行" class="headerlink" title="区别2：类型参数可以多重限定而通配符不行"></a>区别2：类型参数可以多重限定而通配符不行</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MultiLimit</span> <span class="keyword">implements</span> <span class="title">MultiLimitInterfaceA</span>, <span class="title">MultiLimitInterfaceB</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">      * 使用 "&amp;" 符号设定多重边界 (Multi Bounds)</span></span><br><span class="line"><span class="comment">      * <span class="doctag">@param</span> t</span></span><br><span class="line"><span class="comment">      * <span class="doctag">@param</span> &lt;T&gt;</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">      <span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends MultiLimitInterfaceA &amp; MultiLimitInterfaceB&gt; <span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 接口 A</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MultiLimitInterfaceA</span> </span>&#123; &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 接口B</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">MultiLimitInterfaceB</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>使用 &amp; 符号设定多重边界（Multi Bounds），指定泛型类型 T 必须是<br>MultiLimitInterfaceA 和 MultiLimitInterfaceB 的共有子类型，此时变量 t 就具有了所有限定的方法和属性。对于通配符来说，因为它不是一个确定的类型，所以不能进行多重限定。</p>
+<h3 id="区别3：通配符可以使用超类限定而类型参数不行"><a href="#区别3：通配符可以使用超类限定而类型参数不行" class="headerlink" title="区别3：通配符可以使用超类限定而类型参数不行"></a>区别3：通配符可以使用超类限定而类型参数不行</h3><p>类型参数 T 只具有一种类型限定方式：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T extends A</span><br></pre></td></tr></table></figure></p>
+<p>但是通配符 ? 可以进行两种限定：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">? extends A</span><br><span class="line">? <span class="keyword">super</span> A</span><br></pre></td></tr></table></figure></p>
+<h3 id="Class-和-Class-lt-gt-区别"><a href="#Class-和-Class-lt-gt-区别" class="headerlink" title="Class 和 Class&lt;?&gt; 区别"></a>Class<t> 和 Class&lt;?&gt; 区别</t></h3><p>&emsp;前面介绍了 ? 和 T 的区别，那么对于 <code>Class&lt;T&gt;</code> 和 <code>Class&lt;?&gt;</code> 又有什么区别呢？</p>
+<p>&emsp;<code>Class &lt;T&gt;</code> 和 <code>Class &lt;?&gt;</code> 最常见的是在反射场景下的使用，这里以用一段发射的代码来说明下。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过反射的方式生成 MultiLimit 对象，这里比较明显的是，我们需要使用强制类型转换</span></span><br><span class="line">MultiLimit multiLimit = (MultiLimit)</span><br><span class="line">Class.forName(<span class="string">"com.glmapper.bridge.boot.generic.MultiLimit"</span>).newInstance();</span><br></pre></td></tr></table></figure></p>
+<p>对上述代码，在运行期，如果反射的类型不是 MultiLimit 类，那么一定会报 <code>java.lang.ClassCastException</code> 错误。</p>
+<p>&emsp;对于这种情况，则可以使用下面的代码来代替，使得在编译期就能直接检查到类型的问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">T <span class="title">createInstance</span><span class="params">(Class&lt;T&gt; clazz)</span> <span class="keyword">throws</span> IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> clazz.newInstance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">        A a = createInstance(A.class);</span><br><span class="line">        B b = createInstance(B.calss);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+<p>&emsp;<code>Class &lt;T&gt;</code> 在实例化的时候，T 要替换成具体类。<code>Class &lt;?&gt;</code>它是个通配泛型，? 可以代表任何类型，所以主要用于声明时的限制情况。比如，我们可以这样做申明：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以</span></span><br><span class="line"><span class="keyword">public</span> Class&lt;?&gt; clazz;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不可以，因为 T 需要指定类型</span></span><br><span class="line"><span class="keyword">public</span> Class&lt;T&gt; clazzT;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;所以当不知道声明什么类型的 Class 的时候可以已定义一个 Class。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Class&lt;?&gt; clazz;</span><br><span class="line">    <span class="keyword">public</span> Class&lt;T&gt; clazzT;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;那如果也想 <code>public Class&lt;T&gt; calzzT;</code>这样的话，就必须让当前的类也指定 T<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test3</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Class&lt;?&gt; clazz;</span><br><span class="line">    <span class="comment">// 不会报错</span></span><br><span class="line">    <span class="keyword">public</span> Class&lt;T&gt; clazzT;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/06/20190805Factory/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2124,181 +2309,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/09/UML类图/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Y_uan">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/1.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="YY是个呆逼">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/09/UML类图/" itemprop="url">【UML】类之间的关系图汇总</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-09T10:38:28+08:00">
-                2019-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/软件架构/" itemprop="url" rel="index">
-                    <span itemprop="name">-软件架构</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文转自：码匠笔记</p>
-</blockquote>
-<p><div align="center"><br><img src="../images/190509UML/UML1.jpg"><br></div><br><br><br>&emsp;在团队协作过程中最常见的就是开会、开会最常用的就是图，而图中最常见的就是：</p>
-<ul>
-<li>流程图</li>
-<li>时序图</li>
-<li>类图</li>
-</ul>
-<p>&emsp;这三个图可以清楚的描述你想解释的内容。</p>
-<p><div align="center"><br><img src="../images/190509UML/UML2.jpg"><br></div><br><br></p>
-<p>&emsp;上图是模拟出来的一个场景和大家具体说一下类图究竟该怎么画才对。图中讲的是这样一个「故事」：</p>
-<blockquote>
-<p>一个公司下面有很多部门，公司和部门是不可分割的。码农属于一个部门，但是如果部门解散了，码农依然是码农。码农无时无刻不在用手机，只有工作时间才会使用Mac。Mac是一种电脑，电脑是“可计算处理器”的一种实现。下面我们就逐一介绍下这些关系。</p>
-</blockquote>
-<table><tr><td bgcolor="PeachPuff" height="30px" width="200px"><br><font color="black"><br>泛化关系(generation)<br></font><br></td></tr></table>
-
-<p>&emsp;泛化关系为is-a的关系；两个对象之间如果可以用is-a来表示，就是泛化关系。</p>
-<p><div align="center"><br><img src="../images/190509UML/UML3.png"><br></div><br><br><br>&emsp;泛化关系用一条带空心箭头的直接表示。如图为例，Mac和电脑就是泛化关系，通常在程序里面泛化表现为继承于非抽象类。（<strong>可以理解成电脑是一个类，Mac是一个电脑类的具体化对象</strong>）</p>
-<table><tr><td bgcolor="PeachPuff" height="30px" width="200px"><br><font color="black"><br>实现关系(realization)<br></font><br></td></tr></table>
-
-<p><div align="center"><br><img src="../images/190509UML/UML4.png"><br></div><br><br><br>&emsp;实现关系用一条带实心箭头的虚线表示。如图为例，电脑和可计算处理器就是实现关系，通常程序里面的实现关系表现为继承抽象类。<br>比如我们平时写的Readable、Printable等接口的实现。</p>
-<table><tr><td bgcolor="PeachPuff" height="30px" width="200px"><br><font color="black"><br>聚合关系(aggregation)<br></font><br></td></tr></table>
-
-<p><div align="center"><br><img src="../images/190509UML/UML5.png"><br></div><br><br><br>&emsp;聚合关系用一条带空心菱形箭头的直线表示，如图码农和部门就是聚合关系。与组合关系不同的是，整体和部分不是强依赖的，即使整体不存在了，部分仍然存在。如图为例，部门撤销了，码农换一个工作还是码农嘛。</p>
-<table><tr><td bgcolor="PeachPuff" height="30px" width="200px"><br><font color="black"><br>组合关系(composition)<br></font><br></td></tr></table>
-
-<p><div align="center"><br><img src="../images/190509UML/UML6.png"><br></div><br><br><br>&emsp;组合关系用一条带实心菱形箭头直线表示，与聚合关系一样，组合关系同样表示整体由部分构成的关系，不同之处在于整体和部分是强依赖关系，如果整体不存在了，部分也不复存在。如图为例，如果公司倒闭了，那么何来部门呢？</p>
-<table><tr><td bgcolor="PeachPuff" height="30px" width="180px"><br><font color="black"><br>关联关系(association)<br></font><br></td></tr></table>
-
-<p><div align="center"><br><img src="../images/190509UML/UML7.png"><br></div><br><br><br>&emsp;关联关系通常用一条直线表示，当然如果需要标明方向可以添加箭头。它是描述不同的类对象之间的关系，通常不会随着状态的变化而变化，可以理解为被关联者属于关联者的一部分。如图为例，手机就是码农的一部分，不会因为他上班与否而变化所属关系。通常情况在程序里面类似变量的方式表现。</p>
-<table><tr><td bgcolor="PeachPuff" height="30px" width="200px"><br><font color="black"><br>依赖关系(dependency)<br></font><br></td></tr></table>
-
-<p><div align="center"><br><img src="../images/190509UML/UML8.png"><br></div><br><br><br>&emsp;依赖关系是用一套带箭头的虚线表示，他通常描述一个对象在运行期间会用到另一个对象的关系。如图为例码农只有在工作的时候才会用到Mac电脑，所以这种依赖关系时依赖于运行状态的。通常情况下是在程序里面通过构造函数、形参等体现。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2351,7 +2361,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
